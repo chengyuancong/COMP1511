@@ -5,3 +5,5 @@
 !*.c
 !*.txt
 
+# except all dirs
+!*/

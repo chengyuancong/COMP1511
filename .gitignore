@@ -4,6 +4,7 @@
 # except files with specific extentions
 !*.c
 !*.txt
+!*.md
 
 # except all dirs
 !*/

@@ -19,7 +19,7 @@ int main(void) {
     }
     
     int character = getchar();
-    while (character != EOF) {
+    while (character != -1) {
         putchar(decrypt(character, inverse));
         character = getchar();
     }

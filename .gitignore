@@ -5,6 +5,7 @@
 !*.c
 !*.txt
 !*.md
+!*.gitignore
 
 # except all dirs
 !*/

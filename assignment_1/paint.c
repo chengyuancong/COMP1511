@@ -249,9 +249,8 @@ int changeShade(int color) {
     scanf("%d", &new_shade);
     if (color + new_shade >= 0 && color + new_shade <= 4) {
         color = color + new_shade;  
-        return color;   
-    } else {
-        return color;
+    } 
+    return color;
     }
 }
 

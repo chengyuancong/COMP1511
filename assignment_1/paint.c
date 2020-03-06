@@ -251,7 +251,6 @@ int changeShade(int color) {
         color = color + new_shade;  
     } 
     return color;
-    }
 }
 
 // Copy a certain canvas ans paste on elsewhere.

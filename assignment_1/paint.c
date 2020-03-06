@@ -160,7 +160,7 @@ void drawLine(int canvas[N_ROWS][N_COLS], int color) {
 void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
     
     int start_row, start_col, length, direction;
-    scanf("%d %d %d %d",&start_row, &start_col, &length, &direction);
+    scanf("%d %d %d %d", &start_row, &start_col, &length, &direction);
 
     // Transfer length and direction to standard value before input test.
     if (length < 0) {

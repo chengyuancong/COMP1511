@@ -132,7 +132,7 @@ void drawLine(int canvas[N_ROWS][N_COLS], int color) {
                 canvas[start_row][start_col + i] = color;
                 i++;
             }
-        } else if (direction == LETF ) {
+        } else if (direction == LEFT ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col - i] = color;
@@ -200,7 +200,7 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
                 canvas[start_row][start_col + i] = color;
                 i++;
             }
-        } else if (direction == LETF) {
+        } else if (direction == LEFT) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col - i] = color;
@@ -294,7 +294,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                 canvas[target_row][target_col + i] = canvas[start_row][start_col + i];
                 i++;
             }
-        } else if (direction == LETF) {
+        } else if (direction == LEFT) {
             int i = 0;
             while (i < length) {
                 canvas[target_row][target_col - i] = canvas[start_row][start_col - i];
@@ -355,7 +355,7 @@ int check(int start_row, int start_col, int length, int direction) {
             return 1;
         } else if (direction == RIGHT && start_col + length <= N_COLS) {
             return 1;
-        } else if (direction == LETF && start_col - length >= -1) {
+        } else if (direction == LEFT && start_col - length >= -1) {
             return 1;
         } else if (direction == TOP_RIGHT && start_row - length >= -1 && start_col + length <= N_COLS) {
             return 1;
@@ -385,7 +385,7 @@ int copycheck(int start_row, int start_col, int length, int direction, int targe
             return 1;
         } else if (direction == RIGHT && start_col + length <= N_COLS && target_col + length <= N_COLS) {
             return 1;
-        } else if (direction == LETF && start_col - length >= -1 && target_col - length >= -1) {
+        } else if (direction == LEFT && start_col - length >= -1 && target_col - length >= -1) {
             return 1;
         } else if (direction == TOP_RIGHT && start_row - length >= -1 && start_col + length <= N_COLS
                 && target_row - length >= -1 && target_col + length <= N_COLS) {

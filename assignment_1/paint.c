@@ -11,6 +11,7 @@
 
 // Shades (assuming your terminal has a black background).
 #define BLACK 0
+#define WHITE 4
 
 // Display the canvas.
 void displayCanvas(int canvas[N_ROWS][N_COLS]);

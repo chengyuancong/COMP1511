@@ -308,7 +308,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row - i][target_col + j] = canvas[start_row - i][start_col + j];
                     j++;
                 }
-            i++;
+                i++;
             }
         } else if (direction == BOTTOM_LEFT) {
             int i = 0;
@@ -318,7 +318,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row + i][target_col - j] = canvas[start_row + i][start_col - j];
                     j++;
                 }
-            i++;
+                i++;
             }
         } else if (direction == TOP_LEFT) {
             int i = 0;
@@ -328,7 +328,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row - i][target_col - j] = canvas[start_row - i][start_col - j];
                     j++;
                 }
-            i++;
+                i++;
             }
         } else if (direction == BOTTOM_RIGHT) {
             int i = 0;
@@ -338,7 +338,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row + i][target_col + j] = canvas[start_row + i][start_col + j];
                     j++;
                 }
-            i++;
+                i++;
             }
         }    
     }   

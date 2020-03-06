@@ -13,6 +13,16 @@
 #define BLACK 0
 #define WHITE 4
 
+// Direction of a certain angle
+#define UP 0
+#define RIGHT 90
+#define DOWN 180
+#define LEFT 270
+#define TOP_RIGHT 45
+#define BOTTOM_RIGHT 135
+#define BOTTOM_LEFT 225
+#define TOP_LEFT 315
+
 // Display the canvas.
 void displayCanvas(int canvas[N_ROWS][N_COLS]);
 
@@ -82,9 +92,9 @@ void drawEllipse(int canvas[N_ROWS][N_COLS], int color) {
             if (distance(focus_1_row, focus_1_col, i, j) + distance(focus_2_row, focus_2_col, i, j) <= 2 * length) {
                 canvas[i][j] = color;    
             }
-            j ++;   
+            j++;   
         }
-        i ++;
+        i++;
     }
 }
 
@@ -104,53 +114,53 @@ void drawLine(int canvas[N_ROWS][N_COLS], int color) {
     // Test and decide draw or not.
     int valid = check(start_row, start_col, length, direction);
     if (valid == 1) {
-        if (direction == 180 ) {
+        if (direction == DOWN ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row + i][start_col] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 0 ) {
+        } else if (direction == UP ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row - i][start_col] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 90 ) {
+        } else if (direction == RIGHT ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col + i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 270 ) {
+        } else if (direction == LETF ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col - i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 45 ) {
+        } else if (direction == TOP_RIGHT ) {
             int i = 0;
             while (i < length) {
                 canvas[start_row - i][start_col + i] = color;
-                i ++;
+                i++;
             }  
-        } else if (direction == 225) {
+        } else if (direction == BOTTOM_LEFT) {
             int i = 0;
             while (i < length) {
                 canvas[start_row + i][start_col - i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 315) {
+        } else if (direction == TOP_LEFT) {
             int i = 0;
             while (i < length) {
                 canvas[start_row - i][start_col - i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 135) {
+        } else if (direction == BOTTOM_RIGHT) {
             int i = 0;
             while (i < length) {
                 canvas[start_row + i][start_col + i] = color;
-                i ++;
+                i++;
             }
         } 
     }    
@@ -172,31 +182,31 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
     // Test and decide draw or not.
     int valid = check(start_row, start_col, length, direction);
     if (valid == 1) {
-        if (direction == 180) {
+        if (direction == DOWN) {
             int i = 0;
             while (i < length) {
                 canvas[start_row + i][start_col] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 0) {
+        } else if (direction == UP) {
             int i = 0;
             while (i < length) {
                 canvas[start_row - i][start_col] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 90) {
+        } else if (direction == RIGHT) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col + i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 270) {
+        } else if (direction == LETF) {
             int i = 0;
             while (i < length) {
                 canvas[start_row][start_col - i] = color;
-                i ++;
+                i++;
             }
-        } else if (direction == 45) {
+        } else if (direction == TOP_RIGHT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -204,9 +214,9 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
                     canvas[start_row - i][start_col + j] = color;
                     j++;
                 }
-                i ++;
+                i++;
             }
-        } else if (direction == 225) {
+        } else if (direction == BOTTOM_LEFT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -214,9 +224,9 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
                     canvas[start_row + i][start_col - j] = color;
                     j++;
                 }
-                i ++;
+                i++;
             }
-        } else if (direction == 315) {
+        } else if (direction == TOP_LEFT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -224,9 +234,9 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
                     canvas[start_row - i][start_col - j] = color;
                     j++;
                 }
-                i ++;
+                i++;
             }
-        } else if (direction == 135) {
+        } else if (direction == BOTTOM_RIGHT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -234,7 +244,7 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
                     canvas[start_row + i][start_col + j] = color;
                     j++;
                 }
-                i ++;
+                i++;
             }
         }   
     }   
@@ -266,31 +276,31 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
     // Test and decide if they can be copied and pasted.
     int copyValid = copycheck(start_row, start_col, length, direction, target_row, target_col);
     if (copyValid == 1) {
-        if (direction == 180) {
+        if (direction == DOWN) {
             int i = 0;
             while (i < length) {
                 canvas[target_row + i][target_col] = canvas[start_row + i][start_col];
-                i ++;
+                i++;
             }
-        } else if (direction == 0) {
+        } else if (direction == UP) {
             int i = 0;
             while (i < length) {
                 canvas[target_row - i][target_col] = canvas[start_row - i][start_col];
-                i ++;
+                i++;
             }
-        } else if (direction == 90) {
+        } else if (direction == RIGHT) {
             int i = 0;
             while (i < length) {
                 canvas[target_row][target_col + i] = canvas[start_row][start_col + i];
-                i ++;
+                i++;
             }
-        } else if (direction == 270) {
+        } else if (direction == LETF) {
             int i = 0;
             while (i < length) {
                 canvas[target_row][target_col - i] = canvas[start_row][start_col - i];
-                i ++;
+                i++;
             }
-        } else if (direction == 45) {
+        } else if (direction == TOP_RIGHT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -298,9 +308,9 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row - i][target_col + j] = canvas[start_row - i][start_col + j];
                     j++;
                 }
-            i ++;
+            i++;
             }
-        } else if (direction == 225) {
+        } else if (direction == BOTTOM_LEFT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -308,9 +318,9 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row + i][target_col - j] = canvas[start_row + i][start_col - j];
                     j++;
                 }
-            i ++;
+            i++;
             }
-        } else if (direction == 315) {
+        } else if (direction == TOP_LEFT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -318,9 +328,9 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row - i][target_col - j] = canvas[start_row - i][start_col - j];
                     j++;
                 }
-            i ++;
+            i++;
             }
-        } else if (direction == 135) {
+        } else if (direction == BOTTOM_RIGHT) {
             int i = 0;
             while (i < length) {
                 int j = 0;
@@ -328,7 +338,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
                     canvas[target_row + i][target_col + j] = canvas[start_row + i][start_col + j];
                     j++;
                 }
-            i ++;
+            i++;
             }
         }    
     }   
@@ -339,21 +349,21 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
 // the input is invalid. 
 int check(int start_row, int start_col, int length, int direction) {
     if (start_row >= 0 && start_row < N_ROWS && start_col >= 0 && start_col < N_COLS) {
-        if (direction == 180 && start_row + length <= N_ROWS) {
+        if (direction == DOWN && start_row + length <= N_ROWS) {
             return 1;
-        } else if (direction == 0 && start_row - length >= -1) {
+        } else if (direction == UP && start_row - length >= -1) {
             return 1;
-        } else if (direction == 90 && start_col + length <= N_COLS) {
+        } else if (direction == RIGHT && start_col + length <= N_COLS) {
             return 1;
-        } else if (direction == 270 && start_col - length >= -1) {
+        } else if (direction == LETF && start_col - length >= -1) {
             return 1;
-        } else if (direction == 45 && start_row - length >= -1 && start_col + length <= N_COLS) {
+        } else if (direction == TOP_RIGHT && start_row - length >= -1 && start_col + length <= N_COLS) {
             return 1;
-        } else if (direction == 225 && start_row + length <= N_ROWS && start_col - length >= -1) {
+        } else if (direction == BOTTOM_LEFT && start_row + length <= N_ROWS && start_col - length >= -1) {
             return 1;
-        } else if (direction == 315 && start_row - length >= 0 && start_col - length >= -1) {
+        } else if (direction == TOP_LEFT && start_row - length >= 0 && start_col - length >= -1) {
             return 1;
-        } else if (direction == 135 && start_row + length <= N_ROWS && start_col + length <= N_COLS) {
+        } else if (direction == BOTTOM_RIGHT && start_row + length <= N_ROWS && start_col + length <= N_COLS) {
             return 1;
         } else {
             return 0;
@@ -369,24 +379,24 @@ int check(int start_row, int start_col, int length, int direction) {
 int copycheck(int start_row, int start_col, int length, int direction, int target_row, int target_col) {
     if (start_row >= 0 && start_row < N_ROWS && start_col >= 0 && start_col < N_COLS 
      && target_row >= 0 && target_row < N_ROWS && target_col >= 0 && target_col < N_COLS) {
-        if (direction == 180 && start_row + length <= N_ROWS && target_row + length <= N_ROWS) {
+        if (direction == DOWN && start_row + length <= N_ROWS && target_row + length <= N_ROWS) {
             return 1;    
-        } else if (direction == 0 && start_row - length >= -1 && target_row - length >= -1) {
+        } else if (direction == UP && start_row - length >= -1 && target_row - length >= -1) {
             return 1;
-        } else if (direction == 90 && start_col + length <= N_COLS && target_col + length <= N_COLS) {
+        } else if (direction == RIGHT && start_col + length <= N_COLS && target_col + length <= N_COLS) {
             return 1;
-        } else if (direction == 270 && start_col - length >= -1 && target_col - length >= -1) {
+        } else if (direction == LETF && start_col - length >= -1 && target_col - length >= -1) {
             return 1;
-        } else if (direction == 45 && start_row - length >= -1 && start_col + length <= N_COLS
+        } else if (direction == TOP_RIGHT && start_row - length >= -1 && start_col + length <= N_COLS
                 && target_row - length >= -1 && target_col + length <= N_COLS) {
             return 1;
-        } else if (direction == 225 && start_row + length <= N_ROWS && start_col - length >= -1
+        } else if (direction == BOTTOM_LEFT && start_row + length <= N_ROWS && start_col - length >= -1
                 && target_row + length <= N_ROWS && target_col - length >= -1) {
             return 1;
-        } else if (direction == 315 && start_row - length >= -1 && start_col - length >= -1
+        } else if (direction == TOP_LEFT && start_row - length >= -1 && start_col - length >= -1
                 && target_row - length >= -1 && target_col - length >= -1) {
             return 1;
-        } else if (direction == 135 && start_row + length <= N_ROWS && start_col + length <= N_COLS
+        } else if (direction == BOTTOM_RIGHT && start_row + length <= N_ROWS && start_col + length <= N_COLS
                 && target_row + length <= N_ROWS && target_col + length <= N_COLS) {
             return 1;
         } else {

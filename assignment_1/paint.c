@@ -13,7 +13,7 @@
 #define BLACK 0
 #define WHITE 4
 
-// Direction of a certain angle
+// Direction of a certain angle.
 #define UP 0
 #define RIGHT 90
 #define DOWN 180

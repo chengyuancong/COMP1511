@@ -38,7 +38,7 @@ int isLeapYear(int year) {
 
 void printleap(int start, int finish) {
     printf("The leap years between %d and %d are: ", start, finish);
-    for (; start < finish; start++) {
+    for (; start <= finish; start++) {
         if (isLeapYear(start) == 1) {
             printf("%d ", start);
         }

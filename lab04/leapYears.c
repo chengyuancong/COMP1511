@@ -43,5 +43,6 @@ void printleap(int start, int finish) {
             printf("%d ", start);
         }
     }
+    printf("\n");
 }
 

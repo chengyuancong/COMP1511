@@ -8,11 +8,9 @@ int main(void){
     int start;
     int finish;
     printf("Enter start year: ");
-    scanf("%d", &start);
-    if (start >= 0) {
+    if (scanf("%d", &start) ==1 &&start >= 0) {
         printf("Enter finish year: ");
-        scanf("%d", &finish);
-        if (finish >= 0) {
+        if ( scanf("%d", &finish) && finish >= 0) {
             printleap(start, finish);
         } else {
             printf("Invalid input\n");

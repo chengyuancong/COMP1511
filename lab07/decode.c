@@ -1,7 +1,7 @@
 //z5285978
 #include<stdio.h>
 #include<string.h>
-#define LENGTH 27
+#define LENGTH 28
 
 int decrypt(int character, char sub[LENGTH]);
 

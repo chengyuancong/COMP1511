@@ -13,17 +13,17 @@ int main(int argc, char *argv[]) {
 
 void sort3(double *x, double *y, double *z) {
     double tmp;
-    if (*y > *x) {
+    if (*x > *y) {
         tmp = *x;
         *x = *y;
         *y = tmp;
     } 
-    if (*z > *x) {
+    if (*x > *z) {
         tmp = *x;
         *x = *z;
         *z = tmp;
     }
-    if (*z > *y) {  
+    if (*y > *z) {  
         tmp = *y;
         *y = *z;
         *z = tmp;

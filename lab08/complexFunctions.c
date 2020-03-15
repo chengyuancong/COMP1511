@@ -1,6 +1,5 @@
+//z5285978
 // Calculate the magnitude of a complex number
-// By ... (z0000000)
-// Modified on 2019-0?-??
 
 #include <stdio.h>
 #include <stdlib.h>

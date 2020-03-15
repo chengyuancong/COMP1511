@@ -45,7 +45,7 @@ int main(int argc, char * argv[]){
 
 char * concat(char * s1, char * s2) {
     char *s3;
-    s3 = (char *) malloc (strlen(s2)) + strlen(s1) + 1;
+    s3 = (char *) malloc (strlen(s2) + strlen(s1) + 1);
     int i, tmp;
     for (i = 0; s1[i] != '\0'; i++) {
         s3[i] = s1[i];

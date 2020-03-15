@@ -57,8 +57,8 @@ void setup_pet(
 
 // A function that prints out a human readable
 // description of the pet:
-// "<name> is a <type> that is <age> years old and weighs <weight>kg\n"
+// "<name> is a <type> who is <age> years old and weighs <weight>kg\n"
 void print_pet(struct pet *my_pet) {
-    printf("%s is a %s that is %d years old and weighs %dkg\n",
+    printf("%s is a %s who is %d years old and weighs %dkg\n",
             my_pet->name, my_pet->type, my_pet->age, my_pet->weight);
 }

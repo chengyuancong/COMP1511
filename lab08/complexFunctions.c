@@ -57,25 +57,26 @@ int main (int argc, char *argv[]) {
 
     return EXIT_SUCCESS;
 }
-// END OF MAIN FUNCTION
 
 // Calculate the sum of two complex numbers.
 complex complexAdd(complex a, complex b) {
-    // PUT YOUR CODE HERE;
-
-    return 0; // CHANGE THIS TO YOUR RETURN VALUE
+    a.real = a.real + b.real;
+    a.imaginary = a.imaginary + b.imaginary;
+    return a;
 }
 
 // Calculate the product of two complex numbers.
 complex complexMultiply(complex a, complex b) {
-    // PUT YOUR CODE HERE;
-
-    return 0; // CHANGE THIS TO YOUR RETURN VALUE
+    double real = a.real;
+    a.real = a.real * b.real - a.imaginary * b.imaginary;
+    a.imaginary = a.imaginary * b.real + real * b.imaginary;
+    return a;
 }
 
 // Calculate the square of a complex number.
 complex complexSquare(complex c) {
-    // PUT YOUR CODE HERE;
-
-    return 0; // CHANGE THIS TO YOUR RETURN VALUE
+    double real = c.real;
+    c.real = c.real * c.real - c.imaginary * c.imaginary;
+    c.imaginary = c.imaginary * real + real * c.imaginary;
+    return c;
 }

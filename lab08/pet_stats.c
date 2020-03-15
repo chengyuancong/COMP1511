@@ -17,7 +17,6 @@ struct pet {
     int weight;
 };
 
-// function declarations, do not change these
 void setup_pet(
     struct pet *my_pet,
     char *name, 
@@ -25,9 +24,10 @@ void setup_pet(
     char *age, 
     char *weight
 );
+
 void print_pet(struct pet *my_pet);
 
-// do not change any code in the main function
+
 int main(int argc, char *argv[]) {
     if (argc < 5) {
         printf("%s should receive four extra command line arguments.\n", argv[0]);
@@ -42,9 +42,6 @@ int main(int argc, char *argv[]) {
 // A function that takes in four strings
 // (given from the command line arguments in the main function)
 // and stores their data in the pet struct.
-//
-// Note: you will need to convert the 'age' and 'weight' strings 
-// to an integer before storing them in the struct.
 void setup_pet(
     struct pet *my_pet, 
     char *name, 
@@ -52,12 +49,16 @@ void setup_pet(
     char *age, 
     char *weight
 ) {
-    // YOUR CODE GOES HERE
+    strcpy(my_pet->name, name);
+    strcpy(my_pet->type, type);
+    my_pet->age = atoi(age);
+    my_pet->weight = atoi(weight);
 }
 
 // A function that prints out a human readable
 // description of the pet:
 // "<name> is a <type> that is <age> years old and weighs <weight>kg\n"
 void print_pet(struct pet *my_pet) {
-    // YOUR CODE GOES HERE
+    printf("%s is a %s that is %d years old and weighs %dkg\n",
+            my_pet->name, my_pet->type, my_pet->age, my_pet->weight);
 }

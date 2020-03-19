@@ -3,6 +3,7 @@
 
 # except files with specific extentions
 !*.c
+!*.h
 !*.txt
 !*.md
 !*.gitignore

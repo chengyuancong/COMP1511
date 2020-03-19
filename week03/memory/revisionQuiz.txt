@@ -1,0 +1,39 @@
+Convert to decimal assuming it is a positive number:
+1011  = 2^3 + 2^1 + 2^0 = 8 + 2 + 1 = 11
+
+Convert to decimal assuming it is a 4 bit 2's complement number:
+1011  -5
+
+0100
+   1
+-----
+0101 5
+
+Convert to decimal
+0x14 = 16 + 4 = 20
+
+Convert to binary
+0x FA  
+
+11111010
+
+Convert to hex
+0110 0100
+0x64
+
+
+Convert 23 to binary
+
+23/2 = 11 R 1
+11/2 = 5  R 1
+5/2  = 2  R 1
+2/2  = 1  R 0
+1/2  = 0  R 1
+
+10111
+
+957/10 = 95 R 7
+95/10  = 9  R 5
+9/10   = 0  R 9
+
+957

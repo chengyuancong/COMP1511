@@ -9,4 +9,4 @@ UNSW Trimester 1, 2020.
 * [Lecture Recordings](https://moodle.telt.unsw.edu.au/course/view.php?id=50181)
 * [Tutorials and Labs](https://webcms3.cse.unsw.edu.au/DPST1091/20T1/resources/40050)  
 * [Assignment 1](https://cgi.cse.unsw.edu.au/~dp1091/20T1/assignments/ass1/index.html)  
-* [Assignment 2]()
+* [Assignment 2](https://cgi.cse.unsw.edu.au/~dp1091/19T2/assignments/ass2.html)

@@ -64,7 +64,7 @@ void printPiece(Piece pi) {
 }
 
 Piece *connectPiece (Piece *pie, char str[MAX_LENGTH], int i) {
-    Piece *element = (Piece * ) malloc (sizeof (Piece));
+    Piece *element = (Piece *) malloc(sizeof(Piece));
     pie->color = str[i];
     pie->symbol = str[i + 1];
     pie->next = element;

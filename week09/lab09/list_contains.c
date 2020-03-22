@@ -31,9 +31,13 @@ int main(int argc, char *argv[]) {
 
 // Return 1 if value occurs in linked list, 0 otherwise
 int contains(int value, struct node *head) {
-
-    // PUT YOUR CODE HERE (change the next line!)
-    return 42;
+    while (head != NULL) {
+        if (value == head->data) {
+            return 1;
+        }
+        head = head->next;
+    }
+    return 0;
 
 }
 

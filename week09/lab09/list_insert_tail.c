@@ -33,10 +33,18 @@ int main(int argc, char *argv[]) {
 // Insert a new node containing value at the end of the linked list.
 // The head of the new list is returned.
 struct node *insert_tail(int value, struct node *head) {
-
-    // PUT YOUR CODE HERE (change the next line!)
-    return NULL;
-
+    struct node *t_node, *new_head = head;
+    t_node = malloc(sizeof(struct node));
+    t_node->data = value;
+    t_node->next = NULL;
+    if(head == NULL) {
+        return t_node;
+    }
+    while (head->next != NULL) {
+        head = head->next;
+    }
+    head->next = t_node;
+    return new_head;
 }
 
 

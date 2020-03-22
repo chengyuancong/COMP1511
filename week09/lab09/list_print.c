@@ -25,8 +25,14 @@ int main(int argc, char *argv[]) {
 // print a linked list in this format:
 // 17 -> 34 -> 51 -> 68 -> X
 void print(struct node *head) {
-
-    // PUT YOUR CODE HERE
+    if (head == NULL) {
+        printf("X\n");
+    }
+    while (head->next != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("%d -> X\n", head->data);
 }
 
 

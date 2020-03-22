@@ -33,8 +33,10 @@ int main(int argc, char *argv[]) {
 // Insert a new node containing value at the start of the linked list.
 // The head of the new list is returned.
 struct node *insert_head(int value, struct node *head) {
-
-    // PUT YOUR CODE HERE (change the next line!)
+    struct node *h_node = malloc(sizeof(struct node));
+    h_node->data = value;
+    h_node->next = head;
+    return h_node;
     return NULL;
 
 }

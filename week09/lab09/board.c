@@ -56,21 +56,21 @@ void printPiece(Piece pi) {
     Piece *pie = &pi;
     for(i = 1; pie->next != NULL; i++) {
         printf("%c/%c ", pie->color, pie->symbol);
-        pie = pie -> next;
+        pie = pie->next;
         if (i % 4 == 0) {
             printf("\n");
         }
     }
 }
 
-Piece *connectPiece(Piece *pie, char str[MAX_LENGTH], int i) {
-    Piece *element = (Piece*)malloc(sizeof(Piece));
+Piece *connectPiece (Piece *pie, char str[MAX_LENGTH], int i) {
+    Piece *element = (Piece*) malloc (sizeof (Piece));
     pie->color = str[i];
     pie->symbol = str[i + 1];
     pie->next = element;
     if (readPiece(pie) == 0) {
-        fprintf(stderr,"Invalid Input\n");
-        exit(EXIT_FAILURE);
+        fprintf (stderr,"Invalid Input\n");
+        exit (EXIT_FAILURE);
     }
     pie = element;
     return pie;

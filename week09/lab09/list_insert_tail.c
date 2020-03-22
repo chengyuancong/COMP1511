@@ -38,7 +38,7 @@ struct node *insert_tail(int value, struct node *head) {
     t_node = malloc(sizeof(struct node));
     t_node->data = value;
     t_node->next = NULL;
-    if(head == NULL) {
+    if (head == NULL) {
         return t_node;
     }
     while (head->next != NULL) {

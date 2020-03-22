@@ -1,3 +1,4 @@
+//z5285978
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -27,12 +28,14 @@ int main(int argc, char *argv[]) {
 void print(struct node *head) {
     if (head == NULL) {
         printf("X\n");
+        return;
     }
     while (head->next != NULL) {
         printf("%d -> ", head->data);
         head = head->next;
     }
     printf("%d -> X\n", head->data);
+    return;
 }
 
 

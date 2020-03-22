@@ -1,5 +1,7 @@
 // z5285978
-// a program that reads in information about 2 pieces from a game and prints out whether they are equal.
+// a program that reads in information about 2 pieces from a game 
+// and prints out whether they are equal.
+
 #include<stdio.h>
 #include<stdlib.h>
 

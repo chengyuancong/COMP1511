@@ -1,5 +1,6 @@
 // In theory this is infinite recursion. In practice the program will crash. Why?
 #include <stdio.h>
+#include <stdlib.h>
 
 void message(void);
 

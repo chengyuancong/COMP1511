@@ -7,8 +7,8 @@
 // Which statement will check whether a number is between (but not including) 0 and 10.
 
 int main(void){
-    int n;
-    scanf("%d,&n);
+    int x;
+    scanf("%d",&x);
     printf("%d\n",(x > 0) || (x < 10));
     printf("%d\n",(x > 0) && (x < 10));    
     printf("%d\n",0 < x < 10);

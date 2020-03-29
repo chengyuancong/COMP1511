@@ -1,6 +1,6 @@
 // COMP1511 lecture example
 //
-// Read 43 numbers and then print the sum of the numbers
+// Read 42 numbers and then print the sum of the numbers
 //
 // A simple program demonstrating
 // while & scanf

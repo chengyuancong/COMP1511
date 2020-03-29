@@ -14,7 +14,7 @@
 int main(void) {
     int x, y, z;
     x = 1;
-    while (x < N) {
+    while (x <= N) {
         y = 1;
         while (y <= N) {
             z = 1;

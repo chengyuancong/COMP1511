@@ -1,5 +1,5 @@
 // A simple program demonstrating an if statement
-
+#define MIN_DRIVING_AGE 18
 
 #include <stdio.h>
 

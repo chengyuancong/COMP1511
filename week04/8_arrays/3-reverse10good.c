@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 int main(void) {
-    int x[5], i, j;
+    int x[10], i, j;
     printf("Enter 10 numbers: ");
     i = 0;
     while (i < 10) {

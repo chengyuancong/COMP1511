@@ -9,6 +9,7 @@
 //Step 4: Write the function that prints out a single row of *
  
 #include <stdio.h>
+#include <stdlib.h>
 
 int main(void) {
     

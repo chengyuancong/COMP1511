@@ -25,7 +25,8 @@ int main(void) {
     if(n > 0){
         printf("%.0lf ",prev);
     } 
-     if(n > 1){ 
+    
+    if(n > 1){ 
         printf("%.0lf ",curr);
     } 
 

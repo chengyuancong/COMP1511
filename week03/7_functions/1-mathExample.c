@@ -10,7 +10,7 @@
 //Try abs with a double
 int main(void) {
     int a = -199;
-    //abs is in stlib.h, not maths.h like you would expect
+    //abs is in stdlib.h, not maths.h like you would expect
     int result = abs(a);
     
     double b = -199.123;

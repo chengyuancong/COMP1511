@@ -14,7 +14,7 @@ int main(void) {
     row = 0;
     while (row < SIDE_LENGTH) {
         column = 0;
-        while (column <= SIDE_LENGTH) {
+        while (column < SIDE_LENGTH) {
             printf("*");
             column = column + 1;
         }

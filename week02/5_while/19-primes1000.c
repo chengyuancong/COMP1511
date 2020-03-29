@@ -1,6 +1,6 @@
 // A simple program demonstrating nested while loops
 //
-// It prints all prime numbers < 10000
+// It prints all prime numbers < 1000
 //
 // Andrew Taylor - andrewt@unsw.edu.au
 // 18/03/2019

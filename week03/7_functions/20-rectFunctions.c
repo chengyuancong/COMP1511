@@ -17,7 +17,7 @@ void printRow(int columns);
 int main(void) {
     int rows, cols;
     printf("Enter rows and cols: ");
-    while( scanf("%d %d",&rows,&cols) == 2){    
+    while(scanf("%d %d",&rows,&cols) == 2){    
         printRect(rows,cols);
         printf("Enter rows and cols: ");
     }
@@ -26,7 +26,7 @@ int main(void) {
 
 void printRect(int rows, int columns){
     int i = 0;
-    while(i < rows ){
+    while(i < rows){
        printRow(columns);
        printf("\n");
        i = i + 1;

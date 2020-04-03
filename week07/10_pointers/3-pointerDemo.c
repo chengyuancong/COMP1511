@@ -4,7 +4,7 @@
 
  
 int main(void) {
-    /*int x = 10;
+    int x = 10;
     //The variable p is of type int * 
     //which we also call int pointer or pointer to an int
     int *p = &x;
@@ -25,7 +25,7 @@ int main(void) {
     //printf("*p2 is %d\n",*p2);  // NULL POINTER PROBLEM Don't dereference 
     
                                   // a NULL pointer.   
-    */
+    
     
     char name[] = "Samuel";
     name[0] = "C";  // this is valid

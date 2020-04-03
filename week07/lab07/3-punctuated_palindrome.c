@@ -2,18 +2,18 @@
 #include<stdio.h>
 #include<string.h>
 #define MAX_LENGTH 4096
-int simplify(char string1[MAX_LENGTH], char string2[MAX_LENGTH], int length);
+int simplify(char source[MAX_LENGTH], char dest[MAX_LENGTH], int length);
 
 int main(void){
-    char string1[MAX_LENGTH];
-    char string2[MAX_LENGTH];
+    char source[MAX_LENGTH];
+    char dest[MAX_LENGTH];
     printf("Enter a string: ");
-    fgets(string1, MAX_LENGTH, stdin);
-    int letters = simplify(string1, string2, strlen(string1)) + 1;
+    fgets(source, MAX_LENGTH, stdin);
+    int length = simplify(source, dest, strlen(source)) + 1;
     int i = 0;
     int counter = 0;
-    while (i < (letters - 1) / 2) {
-        if (string2[i] == string2[letters - 2 - i]) {
+    while (i < (length - 1) / 2) {
+        if (dest[i] == dest[length - 2 - i]) {
             counter++;
         }
         i++;
@@ -26,23 +26,23 @@ int main(void){
     return 0;
 }
               
-int simplify(char string1[MAX_LENGTH], char string2[MAX_LENGTH], int length) {
+int simplify(char source[MAX_LENGTH], char dest[MAX_LENGTH], int length) {
     int i = 0;
     int j = 0;
     while (i < length) {
-        if (string1[i] >= 'a' && string1[i] <= 'z') {
-            string2[j] = string1[i];
+        if (source[i] >= 'a' && source[i] <= 'z') {
+            dest[j] = source[i];
             i++;
             j++;
-        } else if (string1[i] >= 'A' && string1[i] <= 'Z') {
-            string2[j] = string1[i] + ('a' - 'A');
+        } else if (source[i] >= 'A' && source[i] <= 'Z') {
+            dest[j] = source[i] + ('a' - 'A');
             i++;
             j++;
         } else {
             i++;
         }
     }
-    string2[j] = '\0';
+    dest[j] = '\0';
     return j;
 }
             

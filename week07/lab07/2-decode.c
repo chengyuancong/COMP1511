@@ -14,7 +14,7 @@ int main(void) {
     int j = sub[i] - 'a';
     while (i < 26) {
         inverse[j] = i + 'a';
-        i ++;
+        i++;
         j = sub[i] - 'a';
     }
     

@@ -45,7 +45,7 @@ int main(void){
     printAllStrings(names1,3);
     
     int  num_animals = 0;
-	while ( num_animals < NUM_WORDS && (fgets(data[i], LEN, stdin) != NULL) {
+	while (num_animals < NUM_WORDS && (fgets(names1[num_animals], LEN, stdin) != NULL)) {
 		num_animals++;
 	}
 
@@ -55,7 +55,7 @@ int main(void){
     
     int j = 0;
     while (j < num_animals) {
-    	if (strcmp(search, data[j] == 0)  {
+    	if (strcmp(search, names1[j] == 0)) {
     		printf("Animal found");
     	}
     }
@@ -68,7 +68,7 @@ int readData(char data[NUM_WORDS][LEN]) {
 
 
 	int i = 0;
-	while ( i < NUM_WORDS && (fgets(data[i], LEN, stdin) != NULL) {
+	while ( i < NUM_WORDS && (fgets(data[i], LEN, stdin) != NULL)) {
 		i++;
 	}
 	return i;
@@ -77,8 +77,8 @@ int readData(char data[NUM_WORDS][LEN]) {
 }
 void printAllStrings(char data[][MAX_LENGTH], int size){
     int i = 0;
-    while ( i < size){
+    while (i < size){
         printf("%s\n",data[i]);
         i = i + 1;
     }
-}
+

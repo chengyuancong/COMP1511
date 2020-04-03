@@ -28,14 +28,14 @@ int main(void){
     printAllStrings(names1,3);
 
     //Modify rat and change it to tiger
-    strcpy(names1[2] ,"tiger");
+    strcpy(names1[1] ,"tiger");
     printAllStrings(names1,3);
     return 0;
 }
 
 void printAllStrings(char data[][MAX_LENGTH], int size){
     int i = 0;
-    while ( i < size){
+    while (i < size){
         printf("%s\n",data[i]);
         i = i + 1;
     }

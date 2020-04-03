@@ -53,7 +53,7 @@ int  readData(char data[NUM_WORDS][LEN]){
 void printData(char data[NUM_WORDS][LEN], int numWords){
     int i = 0;
     while ( i < numWords){
-        printf("%s\n",data[i]);
+        printf("%s",data[i]);
         i = i + 1;
     }
 }

@@ -13,8 +13,9 @@
 
 int main(void){
 
-    printf("%d %c\n", 65, 65);  //This works but is BAD STYLE! ALWAYS USE 'A' etc 
-                                //Never use ascii codes directly    
+    //This works but is BAD STYLE! ALWAYS USE 'A' etc 
+    //Never use ascii codes directly
+    printf("%d %c\n", 65, 65);      
     
     printf("%d %c\n",'A','A');
     printf("%d %c\n",'a','a');

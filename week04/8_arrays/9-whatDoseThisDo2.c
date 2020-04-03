@@ -8,20 +8,20 @@
 #define SIZE 10
 
 int main(void) {
-    int numbers[SIZE];
-    int i;
+   int numbers[SIZE];
+   int i;
     
-    i = 0;
-    while (i < SIZE ) {
-       numbers[i] = i * i ;
-       i = i + 1;
-    }
+   i = 0;
+   while (i < SIZE ) {
+      numbers[i] = i * i ;
+      i = i + 1;
+   }
    
    
-    i = 0;
-    while (i < SIZE ) {
-       printf("%d\n",numbers[i]);
-       i = i + 1;
-    }
-    return 0;
+   i = 0;
+   while (i < SIZE ) {
+      printf("%d\n",numbers[i]);
+      i = i + 1;
+   }
+   return 0;
 }

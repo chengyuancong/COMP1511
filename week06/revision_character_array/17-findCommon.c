@@ -36,9 +36,10 @@ int findCommon(int array1[], int array2[], int common[], int size) {
     while (i < size) {  // this is for array1
         int j = 0;
         while (j < size) { // this is for array2
-            if (array1[i] == array2[j]) {  // found a common element, but check if it already exists in the 
-                                           // common array
-                int index = 0;  int existsInCommon = 0;
+            if (array1[i] == array2[j]) {  
+                // found a common element, but check if it already exists in the common array
+                int index = 0;  
+                int existsInCommon = 0;
                 while (index < counter  && (existsInCommon == 0)) {
                     if (common[index] == array1[i]) {
                         existsInCommon = 1;

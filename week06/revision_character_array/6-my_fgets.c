@@ -4,7 +4,7 @@
 
 char *my_fgets(char array[], int arraySize);
 
-int main(int arc, char*argv[]) {
+int main(int argc, char*argv[]) {
     
     char line[MAX_LINE];
     printf("Enter line:");

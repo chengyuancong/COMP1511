@@ -20,7 +20,7 @@ int main(void){
     //This would initialise all values to 0
     //int matrix[MAX][MAX*2] = {{0}};
 
-    /This would initialise all values to have garbage values
+    //This would initialise all values to have garbage values
     //int matrix[MAX][MAX*2];
     
     //What does this code do?

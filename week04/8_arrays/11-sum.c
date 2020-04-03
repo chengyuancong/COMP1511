@@ -23,23 +23,23 @@ int main(void) {
     printf("%d\n",s2);
     printf("%d\n",s3);
  
-    int s3 = sum2(nums1);
-    int s4 = sum2(nums2);
-    int s5 = sum2(nums3);
+    int s4 = sum2(nums1);
+    int s5 = sum2(nums2);
+    int s6 = sum2(nums3);
 
-    printf("%d\n",s3);
     printf("%d\n",s4);
     printf("%d\n",s5);
-        
-    int s6 = sum3(nums1,SIZE);
-    int s7 = sum3(nums2, 11);
-    int s8 = sum3(nums3,2);    
-    int s9 = sum3(nums2,7);
-   
     printf("%d\n",s6);
+        
+    int s7 = sum3(nums1,SIZE);
+    int s8 = sum3(nums2, 11);
+    int s9 = sum3(nums3,2);    
+    int s10 = sum3(nums2,7);
+   
     printf("%d\n",s7);
     printf("%d\n",s8);
     printf("%d\n",s9);
+    printf("%d\n",s10);
  
     return 0;
 }
@@ -49,7 +49,7 @@ int main(void) {
 int sum1(int nums[]){
     int sum = 0;
     int i = 0;
-    while ( i < SIZE){
+    while (i < SIZE){
         sum = sum + nums[i];
         i = i + 1;
     }

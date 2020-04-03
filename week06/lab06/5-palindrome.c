@@ -12,9 +12,9 @@ int main(void){
     int counter = 0;
     while (i < (length - 1) / 2) {
         if (string[i] == string[length - 2 - i]) {
-            counter ++;
+            counter++;
         }
-        i ++;
+        i++;
     }
     if (counter == i) {
         printf("String is a palindrome\n");

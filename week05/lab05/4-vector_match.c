@@ -25,9 +25,9 @@ int main(void){
 
 int match(int array1[SIZE], int array2[SIZE]) {
     int num = 0;
-    for (int i = 0; i < SIZE; i ++) {
+    for (int i = 0; i < SIZE; i++) {
         if (array1[i] == array2[i]) {
-            num ++;
+            num++;
         }
     }
     return num;

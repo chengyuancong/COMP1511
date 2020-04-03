@@ -7,7 +7,7 @@ int myatoi(char s[]);
 //./args -351 500 60
 int main(int argc, char *argv[]) {
 
-	printf("no of args: %d\n", argc);
+	printf("num of args: %d\n", argc);
 	int sum = 0;
 	for (int i = 1; i < argc; i++) {
 		printf("arg %d: %s \n", i, argv[i]);
@@ -24,12 +24,13 @@ int myatoi(char s[]) {
 	int num = 0;
 	int sign = 1;
 	
-	int i =0;
+	int i = 0;
 	if (s[0] == '-') {
 		sign = -1;
+        i = 1;
 	}
 	
-	i = 1;
+	
 	while (s[i] != '\0') {
 		int n = s[i] - '0';  // convert letter '3' to 3
 		num = num * 10 + n;  // num = 3

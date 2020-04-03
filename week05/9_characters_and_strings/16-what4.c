@@ -1,9 +1,9 @@
 // What does this do?
 //
-//  using character constants to get the ASCII codes for the characters,
+// Uses character constants to get the ASCII codes for the characters,
 // and initialize the array to the vales array using , and print the array.
 //
-// This version has a extra special value in the array ('\0') to indicate the //
+// This version has a extra special value in the array ('\0') to indicate the 
 // end of the sequence.  This means we no longer have to keep track of how
 // many characters in the array (note the while loop condition)
 //

@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     char line[MAX_LINE];
     char lastLine[MAX_LINE];
 
-    // read first line into array lastLine
+    // read first line into string lastLine
     printf("Enter line: ");
     fgets(lastLine, MAX_LINE, stdin);
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         // between line & lastLine
 
         int differences = 0;
-        while (line[i] != '\0' && lastLine[i] != 0) {
+        while (line[i] != '\0' && lastLine[i] != '\0') {
             if (lastLine[i] != line[i]) {
                 differences = differences + 1;
             }
@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
             printf("Snap!\n");
         }
 
-        // arrays can't be assigned so copy elements
+        // strings can't be assigned so copy elements
         // of lastLine to line using a loop
         int j = 0;
         while (line[j] != '\0') {

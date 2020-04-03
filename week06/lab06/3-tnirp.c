@@ -18,7 +18,7 @@ int main(int argc, char * argv[]){
 }
 
 void tnirp(char s[]) {
-    for (int i = strlen(s) - 1; i >= 0; i --) {
+    for (int i = strlen(s) - 1; i >= 0; i--) {
         if (s[i] != '\n' ) {
             putchar(s[i]);
         }

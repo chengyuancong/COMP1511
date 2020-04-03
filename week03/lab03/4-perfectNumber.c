@@ -8,8 +8,8 @@ int main(void){
     
     //get factors
     printf("The factors of %d are:\n", num);
-    int counter = 1;
     
+    int counter = 1;
     while (counter <= num) {
         if (num % counter == 0) {
             printf("%d\n", counter);

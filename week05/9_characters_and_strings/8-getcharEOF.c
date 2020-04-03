@@ -14,5 +14,6 @@ int main(void) {
         printf("you entered the character: '%c'\n", ch);
         ch = getchar();
     }
+    //printf("%d", ch);
     return 0;
 }

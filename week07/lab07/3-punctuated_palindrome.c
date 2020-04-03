@@ -2,21 +2,21 @@
 #include<stdio.h>
 #include<string.h>
 #define MAX_LENGTH 4096
-int simplify(char string[MAX_LENGTH], int length);
+int simplify(char string1[MAX_LENGTH], char string2[MAX_LENGTH], int length);
 
 int main(void){
-    char string[MAX_LENGTH];
+    char string1[MAX_LENGTH];
+    char string2[MAX_LENGTH];
     printf("Enter a string: ");
-    fgets(string, MAX_LENGTH, stdin);
-    int length = strlen(string);
-    int letters = simplify(string, length) + 1;
+    fgets(string1, MAX_LENGTH, stdin);
+    int letters = simplify(string1, string2, strlen(string1)) + 1;
     int i = 0;
     int counter = 0;
     while (i < (letters - 1) / 2) {
-        if (string[i] == string[letters - 2 - i]) {
-            counter ++;
+        if (string2[i] == string2[letters - 2 - i]) {
+            counter++;
         }
-        i ++;
+        i++;
     }
     if (counter == i) {
         printf("String is a palindrome\n");
@@ -26,22 +26,23 @@ int main(void){
     return 0;
 }
               
-int simplify(char string[MAX_LENGTH], int length) {
+int simplify(char string1[MAX_LENGTH], char string2[MAX_LENGTH], int length) {
     int i = 0;
     int j = 0;
     while (i < length) {
-        if (string[i] >= 'a' && string[i] <= 'z') {
-            string[j] = string[i];
-            i ++;
-            j ++;
-        } else if (string[i] >= 'A' && string[i] <= 'Z') {
-            string[j] = string[i] + 'a' - 'A';
-            i ++;
-            j ++;
+        if (string1[i] >= 'a' && string1[i] <= 'z') {
+            string2[j] = string1[i];
+            i++;
+            j++;
+        } else if (string1[i] >= 'A' && string1[i] <= 'Z') {
+            string2[j] = string1[i] + ('a' - 'A');
+            i++;
+            j++;
         } else {
-            i ++;
+            i++;
         }
     }
+    string2[j] = '\0';
     return j;
 }
             

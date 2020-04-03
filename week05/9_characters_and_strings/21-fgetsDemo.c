@@ -22,7 +22,7 @@ int main(void) {
     char input[SIZE];
    
     printf("Enter some input: ");
-    if( fgets(input, SIZE, stdin) != NULL){
+    if (fgets(input, SIZE, stdin) != NULL) {
         printf("Input read %s\n",input);
     } else {
         printf("No input\n");
@@ -30,8 +30,8 @@ int main(void) {
     
     int len = strlen(input);
     printf("Len of string is %d\n",len);
-    if( input[len-1] == '\n'){
-       printf("I read in a whole line\n");
+    if (input[len-1] == '\n') {
+        printf("I read in a whole line\n");
     } else {
         printf("I did not read in a whole line\n");
     }

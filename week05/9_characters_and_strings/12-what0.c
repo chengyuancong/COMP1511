@@ -9,26 +9,27 @@
 #include <stdio.h>
 
 int main(void) {
-    int c1 = 43; //C  
-    int c2 = 121;//P 
+    int c1 = 67; //C  
+    int c2 = 80; //P 
     int c3 = 49; //1
     int c4 = 53; //5
     int c5 = 49; //1
     int c6 = 49; //1
+    int c7 = 32; 
+
+    int c8 = 105;
+    int c9 = 115;
+    int c10 = 32;
     
-    int c13 = 105;
+    int c11 = 97;
+    int c12 = 119;
+    int c13 = 101;
     int c14 = 115;
-    int c15 = 32;
-    
-    int c16 = 97;
-    int c17 = 119;
-    int c18 = 101;
-    int c19 = 115;
-    int c20 = 111;
-    int c21 = 109;
-    int c22 = 101;
-    int c23 = 33;
-    int c24 = 10;
+    int c15 = 111;
+    int c16 = 109;
+    int c17 = 101;
+    int c18 = 33;
+    int c19 = 10;
     
     putchar(c1);   //equivalent to printf("%c",c1);
     putchar(c2);
@@ -49,11 +50,6 @@ int main(void) {
     putchar(c17);
     putchar(c18);
     putchar(c19);
-    putchar(c20);
-    putchar(c21);
-    putchar(c22);
-    putchar(c23);
-    putchar(c24);
     
     return 0;
 }

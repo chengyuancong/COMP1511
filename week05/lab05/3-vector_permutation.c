@@ -25,10 +25,7 @@ int main(void) {
     
     if (valid == 1) {
         for(i = 0; i < size; i++) {
-            printf("%d", output[i]);
-            if (i != size - 1) {
-                printf(" ");
-            }
+            printf("%d ", output[i]);
         }
         printf("\n");
     } else {

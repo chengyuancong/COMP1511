@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     char line[MAX_LINE];
     char lastLine[MAX_LINE];
 
-    // read first line into array lastLine
+    // read first line into string lastLine
     printf("Enter line: ");
     fgets(lastLine, MAX_LINE, stdin);
 

@@ -86,33 +86,67 @@ void printSquare(int square[SIZE][SIZE]){
 //returns 0 otherwise
 int checkMagic(int square[SIZE][SIZE]){
     int firstRowSum = 0;
+    int isMagic = 1;
+    int row, col, i;
 
     //Find the sum of the first row
-    int col = 0;
+    col = 0;
     while ( col < SIZE){
         firstRowSum = firstRowSum + square[0][col];
         col = col + 1;
     }
 
     //Check all the rows add up to firstRowSum
-    
-   
-    int row = 1;
-    int rowSum = 0;
+    row = 1;
+    int sum = 0;
     while (row < SIZE){
-        //Find the sum of the row
         col = 0;
-        rowSum = 0;
+        sum = 0;
         while( col < SIZE){
-            rowSum = rowSum + square[row][col];
+            sum = sum + square[row][col];
             col = col + 1;
 	    }       
-        if( rowSum != firstRowSum){
-            return 0;
+        if( sum != firstRowSum){
+            isMagic = 0;
 	    }
         row = row + 1;
     }
-    // We still need to check columns and diagonals
-    // This will be done as a tutorial exercise.
-    return 1;
+    
+    //Check columns
+    col = 0;
+    while (col < SIZE) {
+        sum = 0;
+        row = 0;
+        while (row < SIZE) {
+            sum = sum + square[row][col];
+            row = row + 1;
+        }
+        if (sum != firstRowSum) {
+            isMagic = 0;
+        }
+        col = col + 1;
+    }
+    
+    //Check diagonals
+    sum = 0;
+    i = 0;  
+    while ( i < SIZE ) {
+        sum = sum + square[i][i];    
+        i = i + 1;
+    }
+    if (sum != firstRowSum) {
+        isMagic = 0;
+    }
+    
+    sum = 0;
+    i = 0;
+    while ( i < SIZE ) {
+        sum = sum + square[SIZE-i-1][i];      
+        i = i + 1;
+    }
+    if (sum != firstRowSum) {
+        isMagic = 0;
+    }
+
+    return isMagic;
 }

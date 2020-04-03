@@ -12,8 +12,8 @@ int main(void) {
 
     
     // four ways to convert a string containing digits to number
-    // Version 1
-    
+
+    // Version 1: String to int using getchar
     printf("enter a number:");
     int c = getchar();
     int digitValue = 0; 
@@ -24,11 +24,10 @@ int main(void) {
         printf("read %c and value: %d\n",c-'0',digitValue);
         c = getchar();
     }
-    
     printf("v1: You entered %d\n", digitValue);
     
     
-    // Version 2
+    // Version 2: String to int using fgets
     char line[LENGTH] = {0};
     printf("enter a number:");
     fgets(line,LENGTH,stdin);
@@ -38,29 +37,30 @@ int main(void) {
         digitValue = 10 * digitValue + (line[i] - '0');
         i=i+1;        
     }
-    printf("v2:You entered %d\n", digitValue);
+    printf("v2: You entered %d\n", digitValue);
     
-    // Version 3: String to int using fgets
+    // Version 3: String to int using atoi in stdlib.h
     printf("enter a number:");
     fgets(line,LENGTH,stdin);
     digitValue = atoi(line);
     
-    printf("v3:You entered %d", digitValue);
+    printf("v3: You entered %d", digitValue);
     //fputs(line,stdout);  // this is the same as printf
     
     
     
-    // Version 4: String to int using atoi in stdlib.h
+    // Version 4: String to int using scanf
     int no;
     printf("enter a number:");
     scanf("%d",&no);
-    printf("v4:%d\n",no);
+    printf("v4: You entered %d\n",no);
+    
 
     // An example to show, what happens the last character is not a null character.
     char str1[10] = "hello";
     str1[0] = 'h';
     str1[1] = 'i';
-    // str[2]= '\0'; //try running this last example without '\0' first
+    // str1[2]= '\0'; //try running this last example without '\0' first
     
     // dcc and run - stack overflow
     // dcc --valgrind -o  and run : 

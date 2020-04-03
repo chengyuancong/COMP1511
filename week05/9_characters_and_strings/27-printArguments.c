@@ -7,7 +7,7 @@
 
 // argc = 3
 // argv
-// 0: "./print_arguments"
+// 0: "./27-printArguments"
 // 1: "hello"
 // 2: "99" 
 #include <stdio.h>
@@ -25,5 +25,5 @@ int main(int argc, char * argv[]) {
         i = i + 1;   
     }
    
-    return 0;
+    return EXIT_SUCCESS;
 }

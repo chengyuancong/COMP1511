@@ -14,7 +14,7 @@
 
 int main(void) {
     // if we don't specify the size of an array being initialized C will make
-    // it big enough to hold all the initializing elements (14 in this case)
+    // it big enough to hold all the initializing elements (24 in this case)
     int asciiCodes[] = {'M','y',' ','l','e','c','t','u','r','e','r',' ',
                         'i','s', ' ', 'a','w','e','s','o','m','e','!','\n'};
     int i;

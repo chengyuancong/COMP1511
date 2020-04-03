@@ -44,8 +44,8 @@ int main(void) {
     //    printf("They are not equal\n");
     //}
 
-    if (strcmp(str3,str1) == 0){ 
-       printf("They are equal\n");
+    if (strcmp(str3,str1) == 0) { 
+        printf("They are equal\n");
     } else {
         printf("They are not equal\n");
     }
@@ -63,9 +63,9 @@ long myStrlen(char s[]){
     return i;
 }
 
-/* strncat appends str2 to str1, over writing the terminating null char ('\0') at the end of str1, and then adds a terminating null byte char. strncat will use at most n bytes from str2.
+/* strcat appends str2 to str1, over writing the terminating null char ('\0') at the end of str1, and then adds a terminating null byte char. strncat will use at most n bytes from str2.
 */
-// str1 = good str2 bye
+// str1 = good str2 = bye
 // strcat(str1, str2)  ->  str1 = "goodbye"
 
 void myStrcat(char str1[], char str2[], int n) {
@@ -80,7 +80,7 @@ void myStrcat(char str1[], char str2[], int n) {
     int j = 0;
     printf("i,j is now: %d, %d", i,j);
     
-    while (i < n && str2[j] != '\0') {
+    while (j < n && str2[j] != '\0') {
     	str1[i] = str2[j];
     	i++;
     	j++;
@@ -89,7 +89,7 @@ void myStrcat(char str1[], char str2[], int n) {
     str1[i] = '\0';
 }
 
-// str1 = good str2 bye
+// str1 = good str2 = bye
 // strcopy(str1, str2)  ->  str1 = "bye"
 
 void myStrCopy(char dest[], char src[]){

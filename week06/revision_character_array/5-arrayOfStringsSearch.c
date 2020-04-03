@@ -16,7 +16,7 @@
 //4
 
 //  printf("%s",names1[1]);
-//    printf("%c",names1[2][3]);
+//  printf("%c",names1[2][3]);
 void printAllStrings(char data[][MAX_LENGTH], int size);
 int main(void){
     char names1 [][MAX_LENGTH] = {"dog","cat","elephant", "bird","fish"};
@@ -34,7 +34,7 @@ int main(void){
     }
     
     int i = 0;
-    while( i < 5){
+    while(i < 5){
         //compare searchKey to names1[i]
         if(strcmp(searchKey,names1[i]) == 0){
              printf("We found %s\n",searchKey);

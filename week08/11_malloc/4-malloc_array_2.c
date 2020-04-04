@@ -9,7 +9,7 @@ void printMarks(double  marks[], int size);
 
 int main(int argc, char *argv[]) {
 
-    double * marks;  
+   double * marks;  
    int numMarks;
    
    printf("How many marks are you entering: ");

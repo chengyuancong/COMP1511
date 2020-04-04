@@ -1,4 +1,4 @@
-// An example of using malloc to use to store a string
+// An example of using malloc to store a string
 // We can return the string from the function since
 // we used malloc to get the memory for it on the heap
 
@@ -15,20 +15,21 @@ int main(int argc, char * argv[]){
                    
     char s1[MAX] = "hello";
     char * s2 = s1;
-    //char * s3 = myStrDup(s1);
+    char * s3 = myStrDup(s1);
     char * s4 = strdup(s1);
     
     printf("%s\n",s1);
     printf("%s\n",s2);
-    //printf("%s\n",s3);
+    printf("%s\n",s3);
+    printf("%s\n",s4);
     
     s2[0] = 'z';
     printf("%s\n",s1);
     printf("%s\n",s2);
+    printf("%s\n",s3);
+    printf("%s\n",s4);
     
-    
-    //printf("%s\n",s3);
-    //free(s3);
+    free(s3);
     free(s4);
     
     return EXIT_SUCCESS;

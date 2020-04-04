@@ -6,6 +6,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void f(int *i_pointer,int *sum_pointer);
+
+int main(void) {
+    int i, sum;
+
+    f(&i, &sum);
+
+    return 0;
+}
+
 void f(int *i_pointer,int *sum_pointer) {
     *i_pointer = 0;
     *sum_pointer = 0;
@@ -16,12 +26,4 @@ void f(int *i_pointer,int *sum_pointer) {
     }
 
     printf("%d\n", *sum_pointer); // prints 45
-}
-
-int main(void) {
-    int i, sum;
-
-    f(&i, &sum);
-
-    return 0;
 }

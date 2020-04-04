@@ -20,5 +20,7 @@ int main(void) {
 
     printf("%d\n", *sum_pointer); // prints 45
 
+    free(i_pointer);
+    free(sum_pointer);
     return 0;
 }

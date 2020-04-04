@@ -33,7 +33,7 @@ int main(int argc, char * argv[]) {
 
     array2 = fun5();   //GOOD
     printf("%d %d %d\n",array2[0],array2[1],array2[2]);
-    //free(array2); //TRY REMOVING THIS LINE AND RUNNING WITH --leak-check
+    free(array2); //TRY REMOVING THIS LINE AND RUNNING WITH --leak-check
     return 0;
 }
 

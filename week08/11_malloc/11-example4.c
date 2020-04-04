@@ -22,5 +22,6 @@ int main(void) {
 
     printf("%d\n", *sum_pointer); // prints 45
 
+    free(array);
     return 0;
 }

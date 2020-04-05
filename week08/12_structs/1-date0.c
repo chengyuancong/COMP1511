@@ -35,7 +35,7 @@ int main(void) {
     printf("Address of d.month is %p\n",&d.month);
     printf("Address of d.year is %p\n",&d.year);
     
-    printf("Size of date is %d\n",sizeof(struct date));
+    printf("Size of date is %lu\n",sizeof(struct date));
          
     return 0;
 }

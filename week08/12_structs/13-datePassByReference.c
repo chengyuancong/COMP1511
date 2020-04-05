@@ -68,7 +68,7 @@ int readDate(Date * d){
 //each date in the array in this function
 int readDates(Date dates[],int maxDates){
     int i = 0;
-    while ( i < maxDates && readDate(&dates[i]) ==1){
+    while ( i < maxDates && readDate(&dates[i]) == 1){
         
         i = i + 1;
     }

@@ -15,15 +15,15 @@ int main(void) {
     struct node *head =  malloc(sizeof (struct node));
     head->next =  malloc(sizeof (struct node));
 
-    *(head->data) = 0;
-    *(head->next->data) = 0;
+    (head->data) = 0;
+    (head->next->data) = 0;
 
-    while (*(head->data) < 10) {
-        *(head->next->data) = *(head->next->data) + *(head->data);
-        *(head->data) = *(head->data) + 1;
+    while ((head->data) < 10) {
+        (head->next->data) = (head->next->data) + (head->data);
+        (head->data) = (head->data) + 1;
     }
 
-    printf("%d\n", *(head->next->data)); // prints 45
+    printf("%d\n", (head->next->data)); // prints 45
 
     return 0;
 }

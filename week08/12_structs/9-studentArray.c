@@ -27,7 +27,7 @@ int main(void){
     Student students[MAX_STUDENTS];
        
     students[0].zid = 1323234;
-    students[0].wam =89.5;
+    students[0].wam = 89.5;
     strcpy(students[0].name,"Ronald Mc Donald");
     strcpy(students[0].address,"5 Fake Street");
     

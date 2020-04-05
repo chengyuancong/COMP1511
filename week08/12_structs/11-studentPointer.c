@@ -12,6 +12,7 @@
 #define MAX_LEN 100
 
 typedef struct student Student;
+
 void printStudentDetails(Student s);
 
 struct student {

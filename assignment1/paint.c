@@ -23,6 +23,13 @@
 #define BOTTOM_LEFT 225
 #define TOP_LEFT 315
 
+// Instructions
+#define DRAW_ELLIPSE 0
+#define DRAW_LINE 1
+#define FILL_SQUARE 2
+#define CHANGE_SHADE 3
+#define COPY_PASTE 4
+
 // Display the canvas.
 void displayCanvas(int canvas[N_ROWS][N_COLS]);
 
@@ -60,15 +67,15 @@ int main(void) {
     int color = BLACK;  // Initialise color to black.
     int instruction;
     while (scanf("%d", &instruction) != EOF) {   // Scan the instructions until last line. 
-        if (instruction == 0) {
+        if (instruction == DRAW_ELLIPSE) {
             drawEllipse(canvas, color);
-        } else if (instruction == 1) {
+        } else if (instruction == DRAW_LINE) {
             drawLine(canvas, color);
-        } else if (instruction == 2) {
+        } else if (instruction == FILL_SQUARE) {
             fillSquare(canvas, color);
-        } else if (instruction == 3) {
+        } else if (instruction == CHANGE_SHADE) {
             color = changeShade(color);  // Change the value of color.
-        } else if (instruction == 4) {
+        } else if (instruction == COPY_PASTE) {
             copyPaste(canvas);
         }
     }    
@@ -104,7 +111,7 @@ void drawLine(int canvas[N_ROWS][N_COLS], int color) {
     int start_row, start_col, length, direction;
     scanf("%d %d %d %d", &start_row, &start_col, &length, &direction);
 
-    // Transfer length and direction to standard value before input test.
+    // Convert length and direction to standard value before input test.
     if (length < 0) {
         length = length * (-1);
         direction = direction + 180;
@@ -172,7 +179,7 @@ void fillSquare(int canvas[N_ROWS][N_COLS], int color) {
     int start_row, start_col, length, direction;
     scanf("%d %d %d %d", &start_row, &start_col, &length, &direction);
 
-    // Transfer length and direction to standard value before input test.
+    // Convert length and direction to standard value before input test.
     if (length < 0) {
         length = length * (-1);
         direction = direction + 180;
@@ -266,7 +273,7 @@ void copyPaste(int canvas[N_ROWS][N_COLS]) {
     int start_row, start_col, length, direction, target_row, target_col;
     scanf("%d %d %d %d %d %d", &start_row, &start_col, &length, &direction, &target_row, &target_col);
 
-    // Transfer length and direction to standard value before input test.
+    // Convert length and direction to standard value before input test.
     if (length < 0) {
         length = length * (-1);
         direction = direction + 180;

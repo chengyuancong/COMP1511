@@ -11,6 +11,7 @@
 #define MAX_LEN 100
 
 typedef struct student Student;
+
 struct student {
     int zid;
     double wam;
@@ -18,7 +19,7 @@ struct student {
     char address[MAX_LEN];
 };
 
-Student *  readStudents(int size);
+Student * readStudents(int size);
 void printStudents(Student * students, int size);
 void removeTrailingNewLine(char s[]);
 

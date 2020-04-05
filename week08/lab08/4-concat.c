@@ -45,16 +45,18 @@ int main(int argc, char * argv[]){
 }
 
 char * concat(char * s1, char * s2) {
-    char *s3;
-    s3 = (char *) malloc (strlen(s2) + strlen(s1) + 1);
-    int i, tmp;
-    for (i = 0; s1[i] != '\0'; i++) {
+    char * s3;
+    s3 = malloc (strlen(s2) + strlen(s1) + 1);
+    int i = 0;
+    while (s1[i] != '\0') {
         s3[i] = s1[i];
+        i++;
     }
-    tmp = i;
-    for (i = 0; s2[i] != '\0'; i++) {
-        s3[tmp + i] = s2[i];
+    int j = 0;
+    while (s2[j] != '\0') {
+        s3[i + j] = s2[j];
+        j++;
     }
-    s3[tmp + i] = '\0';
+    s3[i + j] = '\0';
     return s3;
 }

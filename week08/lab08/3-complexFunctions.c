@@ -59,23 +59,24 @@ int main (int argc, char *argv[]) {
 
 // Calculate the sum of two complex numbers.
 complex complexAdd(complex a, complex b) {
-    a.real = a.real + b.real;
-    a.imaginary = a.imaginary + b.imaginary;
-    return a;
+    complex sum;
+    sum.real = a.real + b.real;
+    sum.imaginary = a.imaginary + b.imaginary;
+    return sum;
 }
 
 // Calculate the product of two complex numbers.
 complex complexMultiply(complex a, complex b) {
-    double real = a.real;
-    a.real = a.real * b.real - a.imaginary * b.imaginary;
-    a.imaginary = a.imaginary * b.real + real * b.imaginary;
-    return a;
+    complex product;
+    product.real = a.real * b.real - a.imaginary * b.imaginary;
+    product.imaginary = a.imaginary * b.real + a.real * b.imaginary;
+    return product;
 }
 
 // Calculate the square of a complex number.
-complex complexSquare(complex c) {
-    double real = c.real;
-    c.real = c.real * c.real - c.imaginary * c.imaginary;
-    c.imaginary = c.imaginary * real + real * c.imaginary;
-    return c;
+complex complexSquare(complex a) {
+    complex square;
+    square.real = a.real * a.real - a.imaginary * a.imaginary;
+    a.imaginary = 2 * a.imaginary * a.real;
+    return square;
 }

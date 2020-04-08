@@ -38,6 +38,7 @@
 
 struct pokedex {
     struct pokenode *head;
+    struct pokenode *select;
 };
 
 
@@ -58,6 +59,7 @@ struct pokenode {
 // Add prototypes for any extra functions you create here.
 static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next);
 static struct pokenode *last(struct pokenode *head);
+static int find(struct pokenode *head,Pokemon pokemon);
 static void name_asterisk(char *name);
 static void id_digit(int id);
 
@@ -80,21 +82,23 @@ Pokedex new_pokedex(void) {
 ////////////////////////////////////////////////////////////////////////
 
 void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
-    // new pokenode will be the end in this pokenode list, so next field is NULL
-    struct pokenode *new = createNode(pokemon, NULL);
-    if (pokedex->head == NULL) {
-        // new pokenode is now head of the pokenode list
-        pokedex->head = new; 
-    } else {
-        // change next field of last pokenode from NULL to new pokenode
-        last(pokedex->head)->next = new;
-    }
+    // if (find(pokedex->head ,pokemon) == 1) {
+        // new pokenode will be the end in this pokenode list, so next field is NULL
+        struct pokenode *new = createNode(pokemon, NULL);
+        if (pokedex->head == NULL) {
+            // new pokenode is now head of the pokenode list
+            pokedex->head = new; 
+        } else {
+            // change next field of last pokenode from NULL to new pokenode
+            last(pokedex->head)->next = new;
+        }
+    // } else {
+        // printf("This pokemon has been added\n");
+    // }
 }
 
 void detail_pokemon(Pokedex pokedex) {
-    if (pokedex->head == NULL) {
-        exit(1);
-    } else {
+    if (pokedex->head != NULL) {
         pokemon_type first = pokemon_first_type(pokedex->head->pokemon);
         pokemon_type second = pokemon_second_type(pokedex->head->pokemon);
         printf("Id: ");
@@ -102,8 +106,8 @@ void detail_pokemon(Pokedex pokedex) {
         printf("\n");
         if (pokedex->head->found == 1) {
             printf("Name: %s\n", pokemon_name(pokedex->head->pokemon));
-            printf("Height: %lfm\n", pokemon_height(pokedex->head->pokemon));
-            printf("Weight: %lfkg\n", pokemon_weight(pokedex->head->pokemon));
+            printf("Height: %.1lfm\n", pokemon_height(pokedex->head->pokemon));
+            printf("Weight: %.1lfkg\n", pokemon_weight(pokedex->head->pokemon));
             if (second == NONE_TYPE) {
                 printf("Type: %s\n", pokemon_type_to_string(first));
             } else {
@@ -122,39 +126,36 @@ void detail_pokemon(Pokedex pokedex) {
 Pokemon get_current_pokemon(Pokedex pokedex) {
     if (pokedex->head == NULL) {
         printf("No Pokedex\n");
-        exit(1);
+        return NULL;
     } else {
         return pokedex->head->pokemon;
     }
 }
 
+
 void find_current_pokemon(Pokedex pokedex) {
-    if (pokedex->head == NULL) {
-        exit(1);
-    } else {
+    if (pokedex->head != NULL) {
         pokedex->head->found = 1;
     }
 }
 
 void print_pokemon(Pokedex pokedex) {
-    if (pokedex->head == NULL) {
-        exit(1);
-    } else {
+    if (pokedex->head != NULL) {
         printf("--> #");
         id_digit(pokemon_id(pokedex->head->pokemon));
         printf(": ");
         if (pokedex->head->found == 1) {
-            printf("Name: %s\n", pokemon_name(pokedex->head->pokemon));
+            printf("%s\n", pokemon_name(pokedex->head->pokemon));
         } else {
             name_asterisk(pokemon_name(pokedex->head->pokemon));
         }
         pokedex->head = pokedex->head->next;
-        while (pokedex->head->next != NULL) {
+        while (pokedex->head != NULL) {
             printf("    #");
             id_digit(pokemon_id(pokedex->head->pokemon));
             printf(": ");
             if (pokedex->head->found == 1) {
-                printf("Name: %s\n", pokemon_name(pokedex->head->pokemon));
+                printf("%s\n", pokemon_name(pokedex->head->pokemon));
             } else {
                 name_asterisk(pokemon_name(pokedex->head->pokemon));
             }
@@ -272,6 +273,18 @@ static struct pokenode *last(struct pokenode *head) {
         curr = curr->next;
     }
     return curr;
+}
+
+// return 0 if the pokemon has been added and 1 otherwise
+static int find(struct pokenode *head,Pokemon pokemon) {
+    struct pokenode * curr = head;
+    while(curr != NULL) {
+        if (curr->pokemon == pokemon) {
+            return 0;
+        }
+        curr = curr->next;
+    }
+    return 1;
 }
 
 

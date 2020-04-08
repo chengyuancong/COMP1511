@@ -4,8 +4,8 @@
 // This file allows you to automatically test the functions you
 // implement in pokedex.c.
 //
-// This program was written by YOUR-NAME-HERE (z5555555)
-// on INSERT-DATE-HERE
+// This program was written by Yuancong Cheng (z5285978)
+// on 8 Apr 2020
 //
 // Version 1.0.0: Assignment released.
 // Version 1.0.1: Added pointer check for the provided tests.

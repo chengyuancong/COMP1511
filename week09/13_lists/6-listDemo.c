@@ -31,10 +31,11 @@ struct node *append(struct node *head, int value);
 int sum(struct node *head); 
 void printList(struct node *head);
 struct node *findNode(struct node *head, int data); 
-struct node *insertOrdered(struct node *head,int number) ;
+struct node *insertOrdered(struct node *head, int number);
+struct node *deleteNode(struct node *head, int number);
 void deleteAll(struct node *head);
-void deleteAllWrong(struct node * head);
-struct node *insertFront(struct node *head,int number) ;
+void deleteAllWrong(struct node *head);
+struct node *insertFront(struct node *head,int number);
 
  
 int main(int argc, char *argv[]) {
@@ -221,7 +222,7 @@ struct node *findNode2(struct node *head, int data) {
 
 
 struct node *insertOrdered(struct node *head, int number) {
-   struct node *node =  createNode(number, NULL);
+   struct node *node = createNode(number, NULL);
    struct node *previous = NULL;
    struct node *n = head;
    // find correct position
@@ -238,6 +239,26 @@ struct node *insertOrdered(struct node *head, int number) {
    }
    node->next = n;
    return head;
+}
+
+struct node *deleteNode(struct node *head, int number) {
+    struct node *node = findNode(head, number);
+    if (node == head) { 
+        head = head->next; // remove first item 
+        free(node);
+    } else {
+        struct node *previous = head;
+        while (previous != NULL && previous->next != node) {
+            previous = previous->next;
+        } 
+        if (previous != NULL) { // node found in list 
+            previous->next = node->next;
+            free(node);
+        } else {
+            fprintf(stderr, "warning: node not in list\n"); 
+        }
+    }
+    return head;
 }
 
 void deleteAll(struct node * head){

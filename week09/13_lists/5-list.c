@@ -132,7 +132,7 @@ struct node * addToEnd(struct node * head, int value){
    
    struct node * lastNode = last(head);
    if(lastNode == NULL){
-       newNode;
+       head = newNode;
    } else {
        lastNode->next = newNode;
        return head;
@@ -141,5 +141,14 @@ struct node * addToEnd(struct node * head, int value){
 
 //print list in format like [1,2,3,6,8]
 void printListFancy(struct node * head){
-   //TODO
+    printf("["); 
+    struct node *curr = head; 
+    while (curr != NULL ) {
+        printf("%d", curr->data);
+        if (curr->next != NULL) {
+            printf(", ");
+        }
+        curr = curr->next; 
+    } 
+    printf("]");
 }

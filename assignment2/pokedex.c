@@ -1,8 +1,8 @@
 // Assignment 2 19T2 CP1511: Pokedex
 // pokedex.c
 //
-// This program was written by YOUR-NAME-HERE (z5555555)
-// on INSERT-DATE-HERE
+// This program was written by Yuancoong Cheng (z5285978)
+// on 8 Apr 2020
 //
 // Version 1.0.0: Assignment released.
 // Version 1.0.1: Minor clarifications about `struct pokenode`.

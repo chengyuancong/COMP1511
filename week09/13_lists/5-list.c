@@ -76,41 +76,36 @@ void printList(struct node *head){
 }
 
 int sum(struct node * head){
-  int sumOfElements = 0;
-  struct node * curr = head;
-  while ( curr != NULL){
-      sumOfElements = sumOfElements + curr->data;
-      curr = curr->next;
-  
-  }
-  return sumOfElements;
+    int sumOfElements = 0;
+    struct node * curr = head;
+    while ( curr != NULL){
+        sumOfElements = sumOfElements + curr->data;
+        curr = curr->next;
+    }
+    return sumOfElements;
 }
 
 // return count of nodes in list
 int length(struct node *head) {
-int sumOfElements = 0;
-  int counter = 0;
-  struct node * curr = head;
-  while ( curr != NULL){
-      counter++;
-      curr = curr->next;
-  
-  }   
-  return counter;
+    int counter = 0;
+    struct node * curr = head;
+    while ( curr != NULL){
+        counter++;
+        curr = curr->next;
+    }   
+    return counter;
 }
  
 //return 1 if it found the item and 0 otherwise
 int find(struct node * head, int value){
-   
-  struct node * curr = head;
-  while ( curr != NULL){
-      if(curr->data == value){
-          return 1;
-      } 
-      curr = curr->next;
-  }
-  return 0;
-  
+    struct node * curr = head;
+    while ( curr != NULL){
+        if(curr->data == value){
+            return 1;
+        } 
+        curr = curr->next;
+    }
+    return 0;
 }
 
 struct node * last(struct node * head){
@@ -125,18 +120,18 @@ struct node * last(struct node * head){
 }
 
 struct node * addToEnd(struct node * head, int value){
-   //Create the node
-   struct node * newNode = malloc(sizeof(struct node));
-   newNode->data = value;  
-   newNode->next = NULL;
+    //Create the node
+    struct node * newNode = malloc(sizeof(struct node));
+    newNode->data = value;  
+    newNode->next = NULL;
    
-   struct node * lastNode = last(head);
-   if(lastNode == NULL){
-       head = newNode;
-   } else {
-       lastNode->next = newNode;
-       return head;
-   }
+    struct node * lastNode = last(head);
+    if(lastNode == NULL){
+        head = newNode;
+    } else {
+        lastNode->next = newNode;
+        return head;
+    }
 }
 
 //print list in format like [1,2,3,6,8]

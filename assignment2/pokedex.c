@@ -257,6 +257,7 @@ static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next) {
     }
     n->pokemon = pokemon;
     n->next = next;
+    n->found = 0;
     return n;
 }
 

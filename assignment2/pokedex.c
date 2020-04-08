@@ -40,6 +40,7 @@ struct pokedex {
     struct pokenode *head;
     struct pokenode *select;
     struct pokenode *curr;
+    struct pokenode *temp;
 };
 
 
@@ -50,7 +51,6 @@ struct pokedex {
 
 struct pokenode {
     struct pokenode *next;
-    struct pokenode *prev;
     Pokemon         pokemon;
     int found;
 };
@@ -76,6 +76,9 @@ Pokedex new_pokedex(void) {
     assert(new_pokedex != NULL);
     // add your own code here
     new_pokedex->head = NULL;
+    new_pokedex->select = NULL;
+    new_pokedex->curr = NULL;
+    new_pokedex->temp = NULL;
     return new_pokedex;
 }
 
@@ -87,7 +90,9 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
     if (check(pokedex->head ,pokemon) == 1) {
         struct pokenode *new = createNode(pokemon, NULL);
         if (pokedex->head == NULL) {
-            pokedex->head = new; 
+            pokedex->head = new;
+            pokedex->select = pokedex->head; 
+            pokedex->curr = pokedex->head;
         } else {
             last(pokedex->head)->next = new;
         }
@@ -98,16 +103,16 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
 }
 
 void detail_pokemon(Pokedex pokedex) {
-    if (pokedex->head != NULL) {
-        pokemon_type first = pokemon_first_type(pokedex->head->pokemon);
-        pokemon_type second = pokemon_second_type(pokedex->head->pokemon);
+    if (pokedex->select != NULL) {
+        pokemon_type first = pokemon_first_type(pokedex->select->pokemon);
+        pokemon_type second = pokemon_second_type(pokedex->select->pokemon);
         printf("Id: ");
-        id_digit(pokemon_id(pokedex->head->pokemon));
+        id_digit(pokemon_id(pokedex->select->pokemon));
         printf("\n");
-        if (pokedex->head->found == 1) {
-            printf("Name: %s\n", pokemon_name(pokedex->head->pokemon));
-            printf("Height: %.1lfm\n", pokemon_height(pokedex->head->pokemon));
-            printf("Weight: %.1lfkg\n", pokemon_weight(pokedex->head->pokemon));
+        if (pokedex->select->found == 1) {
+            printf("Name: %s\n", pokemon_name(pokedex->select->pokemon));
+            printf("Height: %.1lfm\n", pokemon_height(pokedex->select->pokemon));
+            printf("Weight: %.1lfkg\n", pokemon_weight(pokedex->select->pokemon));
             if (second == NONE_TYPE) {
                 printf("Type: %s\n", pokemon_type_to_string(first));
             } else {
@@ -115,7 +120,7 @@ void detail_pokemon(Pokedex pokedex) {
             }  
         } else {
             printf("Name: ");
-            name_asterisk(pokemon_name(pokedex->head->pokemon));
+            name_asterisk(pokemon_name(pokedex->select->pokemon));
             printf("Height: --\n");
             printf("Weight: --\n");
             printf("Type: --\n");
@@ -124,23 +129,22 @@ void detail_pokemon(Pokedex pokedex) {
 }
 
 Pokemon get_current_pokemon(Pokedex pokedex) {
-    if (pokedex->head == NULL) {
+    if (pokedex->select == NULL) {
         printf("No Pokedex\n");
         exit(EXIT_FAILURE);
     } else {
-        return pokedex->head->pokemon;
+        return pokedex->select->pokemon;
     }
 }
 
 
 void find_current_pokemon(Pokedex pokedex) {
-    if (pokedex->head != NULL) {
-        pokedex->head->found = 1;
+    if (pokedex->select != NULL) {
+        pokedex->select->found = 1;
     }
 }
 
 void print_pokemon(Pokedex pokedex) {
-    pokedex->curr = pokedex->head;
     if (pokedex->curr != NULL) {
         printf("--> #");
         id_digit(pokemon_id(pokedex->curr->pokemon));
@@ -161,7 +165,8 @@ void print_pokemon(Pokedex pokedex) {
                 name_asterisk(pokemon_name(pokedex->curr->pokemon));
             }
             pokedex->curr = pokedex->curr->next;
-        }    
+        }
+        pokedex->curr = pokedex->head;   
     }
 }
 
@@ -170,39 +175,97 @@ void print_pokemon(Pokedex pokedex) {
 ////////////////////////////////////////////////////////////////////////
 
 void next_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the next_pokemon function in pokedex.c\n");
-    exit(1);
+    if (pokedex->select != NULL) {
+        if (pokedex->select->next != NULL) {
+            pokedex->select = pokedex->select->next;
+        }
+    }
 }
 
 void prev_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the prev_pokemon function in pokedex.c\n");
-    exit(1);
+    pokedex->curr = pokedex->head;
+    if (pokedex->select != NULL && pokedex->select != pokedex->head) {
+        while (pokedex->curr->next != pokedex->select) {
+            pokedex->curr = pokedex->curr->next;
+        }
+        pokedex->select = pokedex->curr;
+    }
+    pokedex->curr = pokedex->head;
 }
 
 void change_current_pokemon(Pokedex pokedex, int id) {
-    fprintf(stderr, "exiting because you have not implemented the change_current_pokemon function in pokedex.c\n");
-    exit(1);
+    pokedex->curr = pokedex->head;
+    if (pokedex->select != NULL) {
+        while (pokedex->curr->next != NULL) {
+            if (pokemon_id(pokedex->curr->pokemon) == id) {
+                pokedex->select = pokedex->curr;
+            }
+            pokedex->curr = pokedex->curr->next;
+        }
+    }
+    pokedex->curr = pokedex->head;
 }
 
 void remove_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the remove_pokemon function in pokedex.c\n");
-    exit(1);
+    if (pokedex->select != NULL) {
+        if (pokedex->select == pokedex->head && pokedex->select->next == NULL) {
+            free(pokedex->select);
+            pokedex->select = NULL;
+            pokedex->head = NULL;
+            pokedex->curr = NULL;
+        } else if (pokedex->select != pokedex->head && pokedex->select->next == NULL) {
+            pokedex->temp = pokedex->select;
+            prev_pokemon(pokedex);
+            free(pokedex->temp);
+        } else if (pokedex->select == pokedex->head && pokedex->select->next != NULL){
+            pokedex->curr = pokedex->head;
+            next_pokemon(pokedex);
+            pokedex->head = pokedex->select;
+            free(pokedex->curr);
+            pokedex->curr = pokedex->head;
+        } else {
+            pokedex->temp = pokedex->select;
+            prev_pokemon(pokedex);
+            pokedex->select->next = pokedex->select->next->next;
+            free(pokedex->temp);
+            next_pokemon(pokedex);
+        }
+    }
+    
 }
 
 void destroy_pokedex(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the destroy_pokedex function in pokedex.c\n");
-    exit(1);
+    while (pokedex->head != NULL) {
+        pokedex->temp = pokedex->head;
+        pokedex->head = pokedex->head->next;
+        free(pokedex->temp);
+    }
+    free(pokedex);
 }
 
 
 int count_found_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the count_found_pokemon function in pokedex.c\n");
-    exit(1);
+    int counter = 0;
+    pokedex->curr = pokedex->head;
+    while (pokedex->curr != NULL) {
+        if (pokedex->curr->found == 1) {
+            counter++;
+        }
+        pokedex->curr = pokedex->curr->next;
+    }
+    pokedex->curr = pokedex->head;
+    return counter;
 }
 
 int count_total_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the count_total_pokemon function in pokedex.c\n");
-    exit(1);
+    int counter = 0;
+    pokedex->curr = pokedex->head;
+    while (pokedex->curr != NULL) {
+        counter++;
+        pokedex->curr = pokedex->curr->next;
+    }
+    pokedex->curr = pokedex->head;
+    return counter;
 }
 
 

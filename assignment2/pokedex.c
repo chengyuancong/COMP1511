@@ -58,6 +58,8 @@ struct pokenode {
 // Add prototypes for any extra functions you create here.
 static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next);
 static struct pokenode *last(struct pokenode *head);
+static void name_asterisk(char *name);
+static void id_digit(int id);
 
 
 // You need to implement the following 20 functions.
@@ -79,7 +81,7 @@ Pokedex new_pokedex(void) {
 
 void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
     // new pokenode will be the end in this pokenode list, so next field is NULL
-    struct pokenode *new = creatNode(pokemon, NULL);
+    struct pokenode *new = createNode(pokemon, NULL);
     if (pokedex->head == NULL) {
         // new pokenode is now head of the pokenode list
         pokedex->head = new; 
@@ -91,7 +93,7 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
 
 void detail_pokemon(Pokedex pokedex) {
     if (pokedex->head == NULL) {
-        return EXIT_FAILURE;
+        exit(1);
     } else {
         pokemon_type first = pokemon_first_type(pokedex->head->pokemon);
         pokemon_type second = pokemon_second_type(pokedex->head->pokemon);
@@ -120,7 +122,7 @@ void detail_pokemon(Pokedex pokedex) {
 Pokemon get_current_pokemon(Pokedex pokedex) {
     if (pokedex->head == NULL) {
         printf("No Pokedex\n");
-        return EXIT_FAILURE;
+        exit(1);
     } else {
         return pokedex->head->pokemon;
     }
@@ -128,7 +130,7 @@ Pokemon get_current_pokemon(Pokedex pokedex) {
 
 void find_current_pokemon(Pokedex pokedex) {
     if (pokedex->head == NULL) {
-        return EXIT_FAILURE;
+        exit(1);
     } else {
         pokedex->head->found = 1;
     }
@@ -136,7 +138,7 @@ void find_current_pokemon(Pokedex pokedex) {
 
 void print_pokemon(Pokedex pokedex) {
     if (pokedex->head == NULL) {
-        return EXIT_FAILURE;
+        exit(1);
     } else {
         printf("--> #");
         id_digit(pokemon_id(pokedex->head->pokemon));

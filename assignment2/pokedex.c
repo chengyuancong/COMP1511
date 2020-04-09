@@ -325,6 +325,7 @@ Pokedex get_pokemon_of_type(Pokedex pokedex, pokemon_type type) {
             pokedex->curr = pokedex->curr->next;
         }
         pokedex->select = pokedex->head;
+        find_all(newdex);
         return newdex;
     }
 }
@@ -363,6 +364,7 @@ Pokedex get_found_pokemon(Pokedex pokedex) {
         min = min + 1;
     }
     found_ordered->select = found_ordered->head;
+    find_all(found_ordered);
     return found_ordered;
 }    
 
@@ -377,6 +379,7 @@ Pokedex search_pokemon(Pokedex pokedex, char *text) {
         pokedex->curr = pokedex->curr->next;
     }
     pokedex->select = pokedex->head;
+    find_all(newdex);
     return newdex;
 }
 
@@ -474,28 +477,34 @@ static void print_evolve(struct pokenode *np) {
     }
 }
 
+// change every pokemon in new pokedex to 'found'
+static void find_all(Pokedex pokedex) {
+    if (pokedex != NULL) {
+        pokedex->curr = pokedex->head;
+        while (pokedex->curr != NULL) {
+            pokedex->curr->found = 1;
+            pokedex->curr = pokedex->curr->next;
+        }
+    }   
+}
+
+
 // check if pokemon's name contains provided text
 static int contain(char *text, char *name) {
     int i = 0;
     int j = 0;
     
     while (text[i] != '\0') {
-        if (text[i] >= 'A' && text[i] <= 'a') {
-            text[i] = text[i] + 'a' - 'A';
-        }
         i++;
-    }
-    while (name[j] != '\0') {
-        if (name[j] >= 'A' && name[j] <= 'a') {
-            name[j] = name[j] + 'a' - 'A';
-        }
-        j++;
     }
     int length = i;
     i = 0;
     j = 0;
     while (name[j] != '\0') {
-        while (text[i] == name[j] &&text[i] != '\0') {
+        while ((text[i] == name[j] 
+                || text[i] + ('a' - 'A') == name[j] 
+                || text[i] == name[j] + ('a' - 'A'))
+                && text[i] != '\0') {
             i++;
         }
         j++;

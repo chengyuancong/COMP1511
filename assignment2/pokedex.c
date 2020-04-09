@@ -64,7 +64,7 @@ static struct pokenode *last(struct pokenode *head);
 static int check(struct pokenode *head,Pokemon pokemon);
 static void name_asterisk(char *name);
 static void id_digit(int id);
-static void free_node(struct pokenode *np);
+static void destroy_node(struct pokenode *np);
 
 
 // You need to implement the following 20 functions.
@@ -191,50 +191,49 @@ void prev_pokemon(Pokedex pokedex) {
 
 void change_current_pokemon(Pokedex pokedex, int id) {
     pokedex->curr = pokedex->head;
-    if (pokedex->select != NULL) {
-        while (pokedex->curr->next != NULL) {
-            if (pokemon_id(pokedex->curr->pokemon) == id) {
-                pokedex->select = pokedex->curr;
-            }
-            pokedex->curr = pokedex->curr->next;
-        }
+    while (pokedex->curr != NULL && pokemon_id(pokedex->curr->pokemon) != id) {
+        pokedex->curr = pokedex->curr->next;
     }
-    pokedex->curr = pokedex->head;
+    pokedex->select = pokedex->curr;
 }
 
+
 void remove_pokemon(Pokedex pokedex) {
+    int length = count_total_pokemon(pokedex);
     if (pokedex->select != NULL) {
-        if (pokedex->select == pokedex->head && pokedex->select->next == NULL) {
-            free_node(pokedex->select);
+        if (length == 1) {
+            destroy_node(pokedex->select);
             pokedex->select = NULL;
-            pokedex->head = NULL;
             pokedex->curr = NULL;
-        } else if (pokedex->select != pokedex->head && pokedex->select->next == NULL) {
-            pokedex->temp = pokedex->select;
-            prev_pokemon(pokedex);
-            free_node(pokedex->temp);
-        } else if (pokedex->select == pokedex->head && pokedex->select->next != NULL){
-            pokedex->curr = pokedex->head;
-            next_pokemon(pokedex);
-            pokedex->head = pokedex->select;
-            free_node(pokedex->curr);
-            pokedex->curr = pokedex->head;
+            pokedex->head = NULL;
         } else {
-            pokedex->temp = pokedex->select;
-            prev_pokemon(pokedex);
-            pokedex->select->next = pokedex->select->next->next;
-            free_node(pokedex->temp);
-            next_pokemon(pokedex);
-        }
-    }
-    
+            if (pokedex->select == pokedex->head) {
+                pokedex->temp = pokedex->select;
+                next_pokemon(pokedex);
+                destroy_node(pokedex->temp);
+                pokedex->head = pokedex->select;
+                pokedex->curr = pokedex->head;
+            } else if (pokedex->select->next == NULL) {
+                pokedex->temp = pokedex->select;
+                prev_pokemon(pokedex);
+                destroy_node(pokedex->temp);
+                pokedex->select->next = NULL;
+            } else {
+                pokedex->temp = pokedex->select;
+                prev_pokemon(pokedex);
+                pokedex->select->next = pokedex->select->next->next;
+                destroy_node(pokedex->temp);
+                next_pokemon(pokedex);
+            }
+        } 
+    }   
 }
 
 void destroy_pokedex(Pokedex pokedex) {
     while (pokedex->head != NULL) {
         pokedex->temp = pokedex->head;
         pokedex->head = pokedex->head->next;
-        free_node(pokedex->temp);
+        destroy_node(pokedex->temp);
     }
     free(pokedex);
 }
@@ -371,8 +370,8 @@ static void id_digit(int id) {
     }
 }
 
-// free a pokemon one a pokenode then free the pokenode
-static void free_node(struct pokenode *np) {
-    free(np->pokemon);
+// free name of pokemon, then pokemon, then a pokenode
+static void destroy_node(struct pokenode *np) {
+    destroy_pokemon(np->pokemon);
     free(np);
 }

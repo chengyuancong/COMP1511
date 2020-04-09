@@ -67,6 +67,7 @@ static void name_asterisk(char *name);
 static void id_digit(int id);
 static void destroy_node(struct pokenode *np);
 static void print_evolve(struct pokenode *np);
+static int contain(char *text, char *name);
 
 
 // You need to implement the following 20 functions.
@@ -309,19 +310,76 @@ int get_next_evolution(Pokedex pokedex) {
 ////////////////////////////////////////////////////////////////////////
 
 Pokedex get_pokemon_of_type(Pokedex pokedex, pokemon_type type) {
-    fprintf(stderr, "exiting because you have not implemented the get_pokemon_of_type function in pokedex.c\n");
-    exit(1);
+    if (type == NONE_TYPE || type == INVALID_TYPE || type == MAX_TYPE) {
+        fprintf(stderr, "exiting because wrong pokemon type\n");
+        exit(EXIT_FAILURE);
+    } else {
+        Pokedex newdex = new_pokedex();
+        pokedex->curr = pokedex->head;
+        while (pokedex->curr != NULL) {
+            if (pokemon_first_type(pokedex->curr->pokemon) == type 
+                || pokemon_second_type(pokedex->curr->pokemon) == type
+                || pokedex->curr->found == 1) {
+                add_pokemon(newdex , clone_pokemon(pokedex->curr->pokemon));
+            }
+            pokedex->curr = pokedex->curr->next;
+        }
+        pokedex->select = pokedex->head;
+        return newdex;
+    }
 }
 
 Pokedex get_found_pokemon(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the get_found_pokemon function in pokedex.c\n");
-    exit(1);
-}
+    Pokedex found = new_pokedex();
+    pokedex->curr = pokedex->head;
+    while (pokedex->curr != NULL) {
+        if (pokedex->curr->found == 1) {
+            add_pokemon(found, clone_pokemon(pokedex->curr->pokemon));
+        }
+        pokedex->curr = pokedex->curr->next;
+    }
+    found->curr = found->head;
+    int max = pokemon_id(found->curr->pokemon);
+    int min = pokemon_id(found->curr->pokemon);
+    found->curr = found->curr->next;
+    while(found->curr != NULL) {
+        if (min > pokemon_id(found->curr->pokemon)) {
+            min = pokemon_id(found->curr->pokemon);
+        }
+        if (max < pokemon_id(found->curr->pokemon)) {
+            max = pokemon_id(found->curr->pokemon);
+        }
+        found->curr = found->curr->next;
+    }
+    Pokedex found_ordered = new_pokedex();
+    while (min <= max) {
+        found->curr = found->head;
+        while (found->curr != NULL) {
+            if (pokemon_id(found->curr->pokemon) == min) {
+                add_pokemon(found_ordered, clone_pokemon(found->curr->pokemon));
+            }
+             found->curr = found->curr->next;
+        }
+        min = min + 1;
+    }
+    found_ordered->select = found_ordered->head;
+    return found_ordered;
+}    
+
 
 Pokedex search_pokemon(Pokedex pokedex, char *text) {
-    fprintf(stderr, "exiting because you have not implemented the search_pokemon function in pokedex.c\n");
-    exit(1);
+    Pokedex newdex = new_pokedex();
+    pokedex->curr = pokedex->head;
+    while (pokedex->curr != NULL) {
+        if (pokedex->curr->found == 1 && contain(text, pokemon_name(pokedex->curr->pokemon)) == 1) {
+            add_pokemon(newdex , clone_pokemon(pokedex->curr->pokemon));
+        }
+        pokedex->curr = pokedex->curr->next;
+    }
+    pokedex->select = pokedex->head;
+    return newdex;
 }
+
 
 // Add definitions for your own functions below.
 // Make them static to limit their scope to this file.
@@ -413,5 +471,38 @@ static void print_evolve(struct pokenode *np) {
         }  
     } else {
         printf(" ???? [????]");
+    }
+}
+
+// check if pokemon's name contains provided text
+static int contain(char *text, char *name) {
+    int i = 0;
+    int j = 0;
+    
+    while (text[i] != '\0') {
+        if (text[i] >= 'A' && text[i] <= 'a') {
+            text[i] = text[i] + 'a' - 'A';
+        }
+        i++;
+    }
+    while (name[j] != '\0') {
+        if (name[j] >= 'A' && name[j] <= 'a') {
+            name[j] = name[j] + 'a' - 'A';
+        }
+        j++;
+    }
+    int length = i;
+    i = 0;
+    j = 0;
+    while (name[j] != '\0') {
+        while (text[i] == name[j] &&text[i] != '\0') {
+            i++;
+        }
+        j++;
+    }
+    if (length == i) {
+        return 1;
+    } else {
+        return 0;
     }
 }

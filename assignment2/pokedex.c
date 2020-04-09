@@ -51,6 +51,7 @@ struct pokedex {
 
 struct pokenode {
     struct pokenode *next;
+    struct pokenode *evolve;
     Pokemon         pokemon;
     int found;
 };
@@ -65,6 +66,7 @@ static int check(struct pokenode *head,Pokemon pokemon);
 static void name_asterisk(char *name);
 static void id_digit(int id);
 static void destroy_node(struct pokenode *np);
+static void print_evolve(struct pokenode *np);
 
 
 // You need to implement the following 20 functions.
@@ -162,7 +164,6 @@ void print_pokemon(Pokedex pokedex) {
         }
         pokedex->curr = pokedex->curr->next;
     }
-    pokedex->curr = pokedex->head;   
 }
 
 
@@ -186,7 +187,6 @@ void prev_pokemon(Pokedex pokedex) {
         }
         pokedex->select = pokedex->curr;
     }
-    pokedex->curr = pokedex->head;
 }
 
 void change_current_pokemon(Pokedex pokedex, int id) {
@@ -212,7 +212,6 @@ void remove_pokemon(Pokedex pokedex) {
                 next_pokemon(pokedex);
                 destroy_node(pokedex->temp);
                 pokedex->head = pokedex->select;
-                pokedex->curr = pokedex->head;
             } else if (pokedex->select->next == NULL) {
                 pokedex->temp = pokedex->select;
                 prev_pokemon(pokedex);
@@ -269,18 +268,40 @@ int count_total_pokemon(Pokedex pokedex) {
 ////////////////////////////////////////////////////////////////////////
 
 void add_pokemon_evolution(Pokedex pokedex, int from_id, int to_id) {
-    fprintf(stderr, "exiting because you have not implemented the add_pokemon_evolution function in pokedex.c\n");
-    exit(1);
+    pokedex->curr = pokedex->head;
+    pokedex->temp = pokedex->head;
+    while (pokedex->curr != NULL && pokemon_id(pokedex->curr->pokemon) != from_id) {
+        pokedex->curr = pokedex->curr->next;
+    }
+    while (pokedex->temp != NULL && pokemon_id(pokedex->temp->pokemon) != to_id) {
+        pokedex->temp = pokedex->temp->next;
+    }
+    if (pokedex->curr == NULL || pokedex->temp == NULL || from_id == to_id) {
+        printf("ID error occurs!\n");
+        exit(EXIT_FAILURE);
+    } else {
+        pokedex->curr->evolve = pokedex->temp;
+    }
 }
 
 void show_evolutions(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the show_evolutions function in pokedex.c\n");
-    exit(1);
+    pokedex->temp = pokedex->select;
+    while (pokedex->temp != NULL) {
+        print_evolve(pokedex->temp);
+        pokedex->temp = pokedex->temp->evolve;
+        if (pokedex->temp != NULL) {
+            printf(" --> ");
+        }
+    }
+    printf("\n");
 }
 
 int get_next_evolution(Pokedex pokedex) {
-    fprintf(stderr, "exiting because you have not implemented the get_next_evolution function in pokedex.c\n");
-    exit(1);
+    if (pokedex->select->evolve == NULL) {
+        return DOES_NOT_EVOLVE;
+    } else {
+        return pokemon_id(pokedex->select->evolve->pokemon);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -318,6 +339,7 @@ static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next) {
     n->pokemon = pokemon;
     n->next = next;
     n->found = 0;
+    n->evolve = NULL;
     return n;
 }
 
@@ -374,4 +396,22 @@ static void id_digit(int id) {
 static void destroy_node(struct pokenode *np) {
     destroy_pokemon(np->pokemon);
     free(np);
+}
+
+// print a evolution node
+static void print_evolve(struct pokenode *np) {
+    pokemon_type first = pokemon_first_type(np->pokemon);
+    pokemon_type second = pokemon_second_type(np->pokemon);
+    printf("#");
+    id_digit(pokemon_id(np->pokemon));
+    if (np->found == 1) {
+        printf(" %s ", pokemon_name(np->pokemon));
+        if (second == NONE_TYPE) {
+            printf("[%s]", pokemon_type_to_string(first));
+        } else {
+            printf("[%s, %s]", pokemon_type_to_string(first), pokemon_type_to_string(second));
+        }  
+    } else {
+        printf(" ???? [????]");
+    }
 }

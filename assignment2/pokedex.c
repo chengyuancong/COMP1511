@@ -68,6 +68,7 @@ static void id_digit(int id);
 static void destroy_node(struct pokenode *np);
 static void print_evolve(struct pokenode *np);
 static int contain(char *text, char *name);
+static void find_all(Pokedex pokedex);
 
 
 // You need to implement the following 20 functions.

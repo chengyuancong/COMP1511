@@ -79,7 +79,6 @@ static void find_all(Pokedex pokedex);
 Pokedex new_pokedex(void) {
     Pokedex new_pokedex = malloc(sizeof (struct pokedex));
     assert(new_pokedex != NULL);
-    // add your own code here
     new_pokedex->head = NULL;
     new_pokedex->select = NULL;
     new_pokedex->curr = NULL;
@@ -232,9 +231,8 @@ void remove_pokemon(Pokedex pokedex) {
 
 void destroy_pokedex(Pokedex pokedex) {
     while (pokedex->head != NULL) {
-        pokedex->temp = pokedex->head;
+        destroy_node(pokedex->head);
         pokedex->head = pokedex->head->next;
-        destroy_node(pokedex->temp);
     }
     free(pokedex);
 }
@@ -455,9 +453,9 @@ static void id_digit(int id) {
 }
 
 // free name of pokemon, then pokemon, then a pokenode
-static void destroy_node(struct pokenode *np) {
-    destroy_pokemon(np->pokemon);
-    free(np);
+static void destroy_node(struct pokenode *node) {
+    destroy_pokemon(node->pokemon);
+    free(node);
 }
 
 // print a evolution node

@@ -488,27 +488,30 @@ static void find_all(Pokedex pokedex) {
 
 // check if pokemon's name contains provided text
 static int contain(char *text, char *name) {
+    int length = 0;
+    while(text[length] != '\0') {
+        length++;
+    }
     int i = 0;
     int j = 0;
-    
-    while (text[i] != '\0') {
-        i++;
-    }
-    int length = i;
-    i = 0;
-    j = 0;
-    while (name[j] != '\0') {
-        while ((text[i] == name[j] 
-                || text[i] + ('a' - 'A') == name[j] 
-                || text[i] == name[j] + ('a' - 'A'))
-                && text[i] != '\0') {
-            i++;
+    char *select = name;
+    int num_match = 0;
+    while (name[i + length] != '\0') {
+        select = &name[i];
+        j = 0;
+        num_match = 0;
+        while (text[j] != '\0') {
+            if (select[j] == text[j] 
+                || select[j] + ('a' - 'A') == text[j] 
+                || select[j] == text[j] + ('a' - 'A')) {
+                num_match++;
+            }
+            j++;
         }
-        j++;
-    }
-    if (length == i) {
-        return 1;
-    } else {
-        return 0;
-    }
+        if (num_match == length) {
+            return 1;
+        }
+        i++;
+    } 
+    return 0;
 }

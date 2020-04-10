@@ -365,6 +365,7 @@ Pokedex get_found_pokemon(Pokedex pokedex) {
         min = min + 1;
     }
     found_ordered->select = found_ordered->head;
+    destroy_pokedex(found);
     find_all(found_ordered);
     return found_ordered;
 }    

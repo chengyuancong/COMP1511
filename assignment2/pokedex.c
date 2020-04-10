@@ -517,7 +517,7 @@ static char *lowercase(char *text, int length) {
     char *lower = malloc((length + 1) * sizeof(char));
     int i = 0;
     while (i <= length) {
-        if (text[i] >= 'A' && text <= 'Z') {
+        if (text[i] >= 'A' && text[i] <= 'Z') {
             lower[i] = text[i] + 'a' - 'A';
         } else {
             lower[i] = text[i];

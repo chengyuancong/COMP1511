@@ -101,7 +101,7 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
             last(pokedex->head)->next = new;
         }
     } else {
-        printf("Error!This pokemon has been added.\n");
+        fprintf(stderr, "Exiting because this pokemon has been added.\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -135,6 +135,7 @@ void detail_pokemon(Pokedex pokedex) {
 Pokemon get_current_pokemon(Pokedex pokedex) {
     if (pokedex->select == NULL) {
         printf("No Pokedex\n");
+        fprintf(stderr, "Exiting because there is no pokedex here.\n");
         exit(EXIT_FAILURE);
     } else {
         return pokedex->select->pokemon;
@@ -231,8 +232,9 @@ void remove_pokemon(Pokedex pokedex) {
 
 void destroy_pokedex(Pokedex pokedex) {
     while (pokedex->head != NULL) {
-        destroy_node(pokedex->head);
+        pokedex->temp = pokedex->head;
         pokedex->head = pokedex->head->next;
+        destroy_node(pokedex->temp);
     }
     free(pokedex);
 }
@@ -277,7 +279,7 @@ void add_pokemon_evolution(Pokedex pokedex, int from_id, int to_id) {
         pokedex->temp = pokedex->temp->next;
     }
     if (pokedex->curr == NULL || pokedex->temp == NULL || from_id == to_id) {
-        printf("ID error occurs!\n");
+        fprintf(stderr, "Exiting because wrong IDs.\n");
         exit(EXIT_FAILURE);
     } else {
         pokedex->curr->evolve = pokedex->temp;
@@ -310,7 +312,7 @@ int get_next_evolution(Pokedex pokedex) {
 
 Pokedex get_pokemon_of_type(Pokedex pokedex, pokemon_type type) {
     if (type == NONE_TYPE || type == INVALID_TYPE || type == MAX_TYPE) {
-        fprintf(stderr, "exiting because wrong pokemon type\n");
+        fprintf(stderr, "Exiting because wrong pokemon type\n");
         exit(EXIT_FAILURE);
     } else {
         Pokedex newdex = new_pokedex();
@@ -393,7 +395,7 @@ Pokedex search_pokemon(Pokedex pokedex, char *text) {
 static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next) {
     struct pokenode *n = malloc(sizeof (struct pokenode));  
     if (n == NULL) {
-        fprintf(stderr, "out of memory\n");
+        fprintf(stderr, "Exiting because out of memory\n");
         exit(EXIT_FAILURE);
     }
     n->pokemon = pokemon;

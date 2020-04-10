@@ -124,7 +124,7 @@ void detail_pokemon(Pokedex pokedex);
 // example of this function being used.
 //
 // If the Pokedex is empty, this function should print an appropriate
-// error message and exit the program.
+// error message.
 Pokemon get_current_pokemon(Pokedex pokedex);
 
 // Sets the currently selected Pokemon to be 'found'.
@@ -344,8 +344,7 @@ int get_next_evolution(Pokedex pokedex);
 // match the given type to be included in the Pokedex.
 //
 // If the specified type is NONE_TYPE, INVALID_TYPE, or MAX_TYPE, this
-// function should print an appropriate error message and exit the
-// program.
+// function should print an appropriate error message.
 //
 // The Pokemon should appear in this Pokedex in the same order as they
 // appeared in the original Pokedex.

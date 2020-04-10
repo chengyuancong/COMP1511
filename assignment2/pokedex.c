@@ -72,7 +72,6 @@ static void find_all(Pokedex pokedex);
 
 
 // You need to implement the following 20 functions.
-// In other words, replace the lines calling fprintf & exit with your code.
 // You can find descriptions of what each function should do in pokedex.h
 
 
@@ -102,7 +101,7 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
         }
     } else {
         fprintf(stderr, "Exiting because this pokemon has been added.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
 }
 
@@ -129,14 +128,12 @@ void detail_pokemon(Pokedex pokedex) {
             printf("Weight: --\n");
             printf("Type: --\n");
         }
-    }   
+    } 
 }
 
 Pokemon get_current_pokemon(Pokedex pokedex) {
     if (pokedex->select == NULL) {
-        printf("No Pokedex\n");
-        fprintf(stderr, "Exiting because there is no pokedex here.\n");
-        exit(EXIT_FAILURE);
+        return NULL;
     } else {
         return pokedex->select->pokemon;
     }
@@ -174,12 +171,11 @@ void print_pokemon(Pokedex pokedex) {
 ////////////////////////////////////////////////////////////////////////
 
 void next_pokemon(Pokedex pokedex) {
-    if (pokedex->select != NULL) {
-        if (pokedex->select->next != NULL) {
-            pokedex->select = pokedex->select->next;
-        }
+    if (pokedex->select != NULL && pokedex->select->next != NULL) {
+        pokedex->select = pokedex->select->next;
     }
 }
+
 
 void prev_pokemon(Pokedex pokedex) {
     pokedex->curr = pokedex->head;
@@ -280,7 +276,7 @@ void add_pokemon_evolution(Pokedex pokedex, int from_id, int to_id) {
     }
     if (pokedex->curr == NULL || pokedex->temp == NULL || from_id == to_id) {
         fprintf(stderr, "Exiting because wrong IDs.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     } else {
         pokedex->curr->evolve = pokedex->temp;
     }
@@ -312,15 +308,14 @@ int get_next_evolution(Pokedex pokedex) {
 
 Pokedex get_pokemon_of_type(Pokedex pokedex, pokemon_type type) {
     if (type == NONE_TYPE || type == INVALID_TYPE || type == MAX_TYPE) {
-        fprintf(stderr, "Exiting because wrong pokemon type\n");
-        exit(EXIT_FAILURE);
+        return NULL;
     } else {
         Pokedex newdex = new_pokedex();
         pokedex->curr = pokedex->head;
         while (pokedex->curr != NULL) {
-            if (pokemon_first_type(pokedex->curr->pokemon) == type 
-                || pokemon_second_type(pokedex->curr->pokemon) == type
-                || pokedex->curr->found == 1) {
+            if ((pokemon_first_type(pokedex->curr->pokemon) == type 
+                || pokemon_second_type(pokedex->curr->pokemon) == type) 
+                && pokedex->curr->found == 1) {
                 add_pokemon(newdex , clone_pokemon(pokedex->curr->pokemon));
             }
             pokedex->curr = pokedex->curr->next;
@@ -397,7 +392,7 @@ static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next) {
     struct pokenode *n = malloc(sizeof (struct pokenode));  
     if (n == NULL) {
         fprintf(stderr, "Exiting because out of memory\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     n->pokemon = pokemon;
     n->next = next;

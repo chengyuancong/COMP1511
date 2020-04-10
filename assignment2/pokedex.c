@@ -64,11 +64,11 @@ static struct pokenode *createNode(Pokemon pokemon, struct pokenode *next);
 static struct pokenode *last(struct pokenode *head);
 static int check(struct pokenode *head,Pokemon pokemon);
 static void name_asterisk(char *name);
-static void id_digit(int id);
 static void destroy_node(struct pokenode *np);
 static void print_evolve(struct pokenode *np);
 static int contain(char *text, char *name);
 static void find_all(Pokedex pokedex);
+static char *lowercase(char *text, int length);
 
 
 // You need to implement the following 20 functions.
@@ -110,7 +110,7 @@ void detail_pokemon(Pokedex pokedex) {
         pokemon_type first = pokemon_first_type(pokedex->select->pokemon);
         pokemon_type second = pokemon_second_type(pokedex->select->pokemon);
         printf("Id: ");
-        id_digit(pokemon_id(pokedex->select->pokemon));
+        printf("%03d", pokemon_id(pokedex->select->pokemon));
         printf("\n");
         if (pokedex->select->found == 1) {
             printf("Name: %s\n", pokemon_name(pokedex->select->pokemon));
@@ -154,7 +154,7 @@ void print_pokemon(Pokedex pokedex) {
         } else {
             printf("    #");
         }
-        id_digit(pokemon_id(pokedex->curr->pokemon));
+        printf("%03d", pokemon_id(pokedex->curr->pokemon));
         printf(": ");
         if (pokedex->curr->found == 1) {
             printf("%s\n", pokemon_name(pokedex->curr->pokemon));
@@ -437,18 +437,6 @@ static void name_asterisk(char *name) {
     printf("\n");
 }
 
-// add 0 to id less than three digits
-static void id_digit(int id) {
-    if (id >= 0 && id <= 9) {
-        printf("00");
-        printf("%d", id);
-    } else if (id >= 10 && id <= 99) {
-        printf("0");
-        printf("%d", id);
-    } else {
-        printf("%d", id);
-    }
-}
 
 // free name of pokemon, then pokemon, then a pokenode
 static void destroy_node(struct pokenode *node) {
@@ -461,7 +449,7 @@ static void print_evolve(struct pokenode *np) {
     pokemon_type first = pokemon_first_type(np->pokemon);
     pokemon_type second = pokemon_second_type(np->pokemon);
     printf("#");
-    id_digit(pokemon_id(np->pokemon));
+    printf("%03d", pokemon_id(np->pokemon));
     if (np->found == 1) {
         printf(" %s ", pokemon_name(np->pokemon));
         if (second == NONE_TYPE) {
@@ -496,26 +484,45 @@ static int contain(char *text, char *name) {
     while (name[name_len] != '\0') {
         name_len++;
     }
+    char *lower_text = lowercase(text, text_len);
+    char *lower_name = lowercase(name, name_len);
     int i = 0;
     int j = 0;
-    char *select = name;
+    char *select = lower_name;
     int num_match = 0;
     while (i + text_len <= name_len) {
-        select = &name[i];
+        select = &lower_name[i];
         j = 0;
         num_match = 0;
         while (j < text_len) {
-            if (select[j] == text[j] 
-                || select[j] + ('a' - 'A') == text[j] 
-                || select[j] == text[j] + ('a' - 'A')) {
+            if (select[j] == lower_text[j]) {
                 num_match++;
             }
             j++;
         }
         if (num_match == text_len) {
+            free(lower_text);
+            free(lower_name);
             return 1;
         }
         i++;
-    } 
+    }
+    free(lower_text);
+    free(lower_name);
     return 0;
+}
+
+// conver name and text to lower case
+static char *lowercase(char *text, int length) {
+    char *lower = malloc((length + 1) * sizeof(char));
+    int i = 0;
+    while (i <= length) {
+        if (text[i] >= 'A' && text <= 'Z') {
+            lower[i] = text[i] + 'a' - 'A';
+        } else {
+            lower[i] = text[i];
+        }
+        i++;
+    }
+    return lower;
 }

@@ -38,11 +38,11 @@
 // You may change or delete the head field.
 
 struct pokedex {
-    struct pokenode *head;
-    struct pokenode *select;
-    struct pokenode *curr;
-    struct pokenode *temp;
-};
+    struct pokenode *head;    // Always points to the head of pokedex.
+    struct pokenode *select;  // Points to selected pokenode.
+    struct pokenode *curr;    // Points to current pokenode when traversing.
+    struct pokenode *temp;    // To temporarily save an address of curr or 
+};                            // select or head when they need to move.
 
 
 // You don't have to use the provided struct pokenode, you are free to
@@ -51,10 +51,10 @@ struct pokedex {
 // to it to store other information.
 
 struct pokenode {
-    struct pokenode *next;
-    struct pokenode *evolve;
-    Pokemon         pokemon;
-    int found;
+    struct pokenode *next;    // Points to next node.  
+    struct pokenode *evolve;  // Points to next evolution pokenode.
+    Pokemon         pokemon;  // Points to corresponding pokemon.
+    int found;                // An indicator for 'found' or not.
 };
 
 // Add any other structs you define here.
@@ -75,14 +75,13 @@ static char *lowercase(char *string, int length);
 // You need to implement the following 20 functions.
 // You can find descriptions of what each function should do in pokedex.h
 
-
 Pokedex new_pokedex(void) {
     Pokedex new_pokedex = malloc(sizeof (struct pokedex));
     assert(new_pokedex != NULL);
-    new_pokedex->head = NULL;
-    new_pokedex->select = NULL;
+    new_pokedex->head = NULL;       // All fields are set to NULL 
+    new_pokedex->select = NULL;     // after a new pokedex is created.
     new_pokedex->curr = NULL;
-    new_pokedex->temp = NULL;
+    new_pokedex->temp = NULL;    
     return new_pokedex;
 }
 
@@ -90,6 +89,15 @@ Pokedex new_pokedex(void) {
 //                         Stage 1 Functions                          //
 ////////////////////////////////////////////////////////////////////////
 
+// Check if the pokemon has been added before creating a new pokenode.
+// 
+// Use creat_node to create a new pokenode contains this pokemon 
+// and its next field is NULL as it is last pokenode. Then the make the 
+// previous last pokenode points to this new one.
+// 
+// After first pokenode is created, head points to new one.
+// 
+// Current and selected points to head.
 void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
     if (check(pokedex, pokemon) == TRUE) {
         struct pokenode *new = create_node(pokemon, NULL);
@@ -106,6 +114,8 @@ void add_pokemon(Pokedex pokedex, Pokemon pokemon) {
     }
 }
 
+// Print the detail of pokemon in selected pokenode.
+// Hide information if it is not 'found'.
 void detail_pokemon(Pokedex pokedex) {
     if (pokedex->select != NULL) {
         pokemon_type first = pokemon_first_type(pokedex->select->pokemon);
@@ -131,6 +141,10 @@ void detail_pokemon(Pokedex pokedex) {
     } 
 }
 
+// Return the currently selected Pokemon.
+// 
+// If the Pokedex is empty, an appropriate error message
+// has been written in main.c so just return NULL.
 Pokemon get_current_pokemon(Pokedex pokedex) {
     if (pokedex->select == NULL) {
         return NULL;
@@ -139,13 +153,17 @@ Pokemon get_current_pokemon(Pokedex pokedex) {
     }
 }
 
-
+// Set the currently selected Pokemon to be 'found'.
+// If there are no Pokemon in the Pokedex, this function does nothing.
 void find_current_pokemon(Pokedex pokedex) {
     if (pokedex->select != NULL) {
         pokedex->select->found = TRUE;
     }
 }
 
+// Use curr to traverse pokedex and print pokemon's id and name.
+// Print and arrow if it is selected.
+// Hide name if it is not 'found'.
 void print_pokemon(Pokedex pokedex) {
     pokedex->curr = pokedex->head;
     while (pokedex->curr != NULL) {
@@ -168,13 +186,24 @@ void print_pokemon(Pokedex pokedex) {
 //                         Stage 2 Functions                          //
 ////////////////////////////////////////////////////////////////////////
 
+// Change the selected Pokemon to be the Pokemon after the selected one.
+// If there is no next Pokemon, the current Pokemon is unchanged.
+// If there are no Pokemon in the Pokedex, this function does nothing.
 void next_pokemon(Pokedex pokedex) {
     if (pokedex->select != NULL && pokedex->select->next != NULL) {
         pokedex->select = pokedex->select->next;
     }
 }
 
-
+// The pokedex has at least one pokenode if select is not NULL.
+// 
+// If select is also not head, this pokedex has at least two pokenode and select 
+// must not be the head, which means select can be changed to previous one.
+// 
+// Use curr to traverse and find the one before the select and change select to it.
+// 
+// Otherwise, there is no previous pokemon, current is unchanged
+// or this pokedex is empty, this function does nothing.
 void prev_pokemon(Pokedex pokedex) {
     pokedex->curr = pokedex->head;
     if (pokedex->select != NULL && pokedex->select != pokedex->head) {
@@ -185,6 +214,9 @@ void prev_pokemon(Pokedex pokedex) {
     }
 }
 
+// Change the currently selected Pokemon to be the Pokemon with the ID `id`.
+// Use pokemon_id to check if there is a pokemon with this id.
+// If there is no Pokemon with the ID `id`, this function does nothing.
 void change_current_pokemon(Pokedex pokedex, int id) {
     pokedex->curr = pokedex->head;
     while (pokedex->curr != NULL && pokemon_id(pokedex->curr->pokemon) != id) {
@@ -193,36 +225,62 @@ void change_current_pokemon(Pokedex pokedex, int id) {
     pokedex->select = pokedex->curr;
 }
 
-
+// Remove the currently selected Pokemon from the Pokedex.
+// Count length of this pokedex before removing a pokenode.
+// 
+// Use temp to save the select one and move select to next or previous
+// use next_pokemon and prev_pokemon then remove temp by destroy_node.
 void remove_pokemon(Pokedex pokedex) {
     int length = count_total_pokemon(pokedex);
-    if (length == 1) {
+    // If length is zero, there is no selected and pokedex is empty.
+    // If length is one, remove head and change all fields to NULL.
+    if (length == 1) {    
         destroy_node(pokedex->select);
         pokedex->select = NULL;
         pokedex->curr = NULL;
         pokedex->head = NULL;
+    // If length is larger than two, check if select is head or last.
     } else if (length >= 2) {
+        // Head is selected.
         if (pokedex->select == pokedex->head) {
+            // Save select pokenode.
             pokedex->temp = pokedex->select;
+            // Move select to next one.
             next_pokemon(pokedex);
+            // Destroy temp pokenode.
             destroy_node(pokedex->temp);
+            // Move head to new head.
             pokedex->head = pokedex->select;
+        // Last pokenode is selected.
         } else if (pokedex->select->next == NULL) {
+            // Save select pokenode.
             pokedex->temp = pokedex->select;
+            // Move select to previous one.
             prev_pokemon(pokedex);
+            // Destroy temp pokenode.
             destroy_node(pokedex->temp);
+            // Set next field of last to NULL.              
             pokedex->select->next = NULL;
+        // If length is larger than two and select is neither head nor last,
+        // select must between head and last.
         } else {
+            // Save select pokenode.
             pokedex->temp = pokedex->select;
+            // Move select to previous one.
             prev_pokemon(pokedex);
+            // Reconnect the select one and the one after the next one.
             pokedex->select->next = pokedex->select->next->next;
+            // Remove the one used to be selected.
             destroy_node(pokedex->temp);
+            // The one after the next one now becomes the next.
+            // Change select to this one then this remove complete.
             next_pokemon(pokedex);
         }
     } 
 }   
 
-
+// Destroy a given Pokedex from head using temp.
+// After all pokenodes are freed by destroy_node, free this pokedex.
 void destroy_pokedex(Pokedex pokedex) {
     while (pokedex->head != NULL) {
         pokedex->temp = pokedex->head;
@@ -232,7 +290,8 @@ void destroy_pokedex(Pokedex pokedex) {
     free(pokedex);
 }
 
-
+// Return the number of Pokemon in the Pokedex that have been found.
+// Use curr to traverse and check if it is 'found'.
 int count_found_pokemon(Pokedex pokedex) {
     int counter = 0;
     pokedex->curr = pokedex->head;
@@ -245,6 +304,8 @@ int count_found_pokemon(Pokedex pokedex) {
     return counter;
 }
 
+// Return the total number of Pokemon in the Pokedex.
+// Use curr to traverse.
 int count_total_pokemon(Pokedex pokedex) {
     int counter = 0;
     pokedex->curr = pokedex->head;
@@ -260,6 +321,15 @@ int count_total_pokemon(Pokedex pokedex) {
 //                         Stage 3 Functions                          //
 ////////////////////////////////////////////////////////////////////////
 
+// Add the information that the Pokemon with the ID `from_id` can
+// evolve into the Pokemon with the ID `to_id`.
+// 
+// Use curr and temp to traverse two times to find the from_id and to_id.
+// 
+// If from_id and to_id both exist and not equal, change current pokenode's
+// evolve to temp pokenode. 
+// 
+// Print error and exit otherwise.
 void add_pokemon_evolution(Pokedex pokedex, int from_id, int to_id) {
     pokedex->curr = pokedex->head;
     pokedex->temp = pokedex->head;
@@ -277,6 +347,11 @@ void add_pokemon_evolution(Pokedex pokedex, int from_id, int to_id) {
     }
 }
 
+// Show the evolutions of the currently selected Pokemon.
+// 
+// Use temp to save select pokenode and traverse through
+// 'evolve' and use print_evolve to print information of 
+// every pokemon in evolution process.
 void show_evolutions(Pokedex pokedex) {
     pokedex->temp = pokedex->select;
     while (pokedex->temp != NULL) {
@@ -289,47 +364,93 @@ void show_evolutions(Pokedex pokedex) {
     printf("\n");
 }
 
+// Return the pokemon_id of the Pokemon that the currently selected
+// Pokemon evolves into.
+// 
+// If the currently selected Pokemon does not evolve, this function
+// return DOES_NOT_EVOLVE.
+// 
+// If the Pokedex is empty, this function print an appropriate
+// error message and exit the program.
 int get_next_evolution(Pokedex pokedex) {
-    if (pokedex->select->evolve == NULL) {
-        return DOES_NOT_EVOLVE;
+    if (pokedex->select != NULL) {
+        if (pokedex->select->evolve == NULL) {
+            return DOES_NOT_EVOLVE;
+        } else {
+            return pokemon_id(pokedex->select->evolve->pokemon);
+        }
     } else {
-        return pokemon_id(pokedex->select->evolve->pokemon);
-    }
+        fprintf(stderr, "Exiting because the pokedex is empty.\n");
+        exit(1);
+    }   
 }
 
 ////////////////////////////////////////////////////////////////////////
 //                         Stage 4 Functions                          //
 ////////////////////////////////////////////////////////////////////////
 
+// Create a new Pokedex which contains only the Pokemon of a specified
+// type from the original Pokedex.
+// 
+// If the specified type is NONE_TYPE, INVALID_TYPE, or MAX_TYPE, an 
+// appropriate error message has been written in main.c so just return NULL.
+// 
+// If there are no matching Pokemon, this function return an
+// empty Pokedex.
 Pokedex get_pokemon_of_type(Pokedex pokedex, pokemon_type type) {
     if (type == NONE_TYPE || type == INVALID_TYPE || type == MAX_TYPE) {
         return NULL;
     } else {
+        // Use new_pokedex to create a new pokedex.
         Pokedex newdex = new_pokedex();
+        // Use curr to traverse original pokedex.
         pokedex->curr = pokedex->head;
         while (pokedex->curr != NULL) {
+            // If the type of pokemon in original pokedex has the 
+            // same type with provided type and it is also 'found',
             if ((pokemon_first_type(pokedex->curr->pokemon) == type 
                 || pokemon_second_type(pokedex->curr->pokemon) == type) 
                 && pokedex->curr->found == TRUE) {
+                // use add_pokemon to creat a new pokenode which contains
+                // a clone of original pokemon and place this pokenode at 
+                // the end of the new pokedex.
                 add_pokemon(newdex , clone_pokemon(pokedex->curr->pokemon));
             }
             pokedex->curr = pokedex->curr->next;
         }
-        pokedex->select = pokedex->head;
+        // Set select to head of new pokedex.
+        newdex->select = newdex->head;
+        // Set all pokemon in new pokedex to 'found'.
         find_all(newdex);
         return newdex;
     }
 }
 
+// Create a new Pokedex which contains only the Pokemon that have
+// previously been 'found' from the original Pokedex.
+// 
+// If there are no matching Pokemon, this function return an
+// empty Pokedex.
 Pokedex get_found_pokemon(Pokedex pokedex) {
+    // Use new_pokedex to create a new pokedex 
+    // which will contains pokemon that has been found.
     Pokedex found = new_pokedex();
+    // Use curr to traverse original pokedex.
     pokedex->curr = pokedex->head;
     while (pokedex->curr != NULL) {
+        // If the pokemon in original pokedex is found,
         if (pokedex->curr->found == TRUE) {
+            // use add_pokemon to creat a new pokenode which contains
+            // a clone of original pokemon and place this pokenode at 
+            // the end of the 'found' pokedex.
             add_pokemon(found, clone_pokemon(pokedex->curr->pokemon));
         }
         pokedex->curr = pokedex->curr->next;
     }
+    // Use a method similar with selection sort to sort the pokenode in 
+    // 'found' and add them one by one to anther new pokedex 'found_ordered'.
+    // Firstly, use curr of 'found' to traverse 'found' to get
+    // a minimum and a maximun of pokemon_id in 'found'.
     found->curr = found->head;
     int max = pokemon_id(found->curr->pokemon);
     int min = pokemon_id(found->curr->pokemon);
@@ -343,35 +464,61 @@ Pokedex get_found_pokemon(Pokedex pokedex) {
         }
         found->curr = found->curr->next;
     }
+    // Use new_pokedex to create another new pokedex 
+    // which will store the sorted pokenodes in 'found'.
     Pokedex found_ordered = new_pokedex();
     while (min <= max) {
+        // use curr of 'found' to traverse 'found' again and again.
         found->curr = found->head;
         while (found->curr != NULL) {
+            // If the id of pokemon in 'found' matchs
+            // the increasing min in this loop,
             if (pokemon_id(found->curr->pokemon) == min) {
+                // use add_pokemon to creat a new pokenode which contains
+                // a clone of pokemon in 'found' and place this pokenode at 
+                // the end of the 'found_order'.
                 add_pokemon(found_ordered, clone_pokemon(found->curr->pokemon));
             }
             found->curr = found->curr->next;
         }
         min++;
     }
+    // Set select to head of 'found_ordered'.
     found_ordered->select = found_ordered->head;
+    // 'Found' should be destroy as it is created using malloc but
+    // destroy_pokedex will only destroy 'found_orderd' after this
+    // function ends.
     destroy_pokedex(found);
+    // Set all pokemon in new pokedex to 'found'.
     find_all(found_ordered);
     return found_ordered;
 }    
 
-
+// Create a new Pokedex containing only the Pokemon from the original
+// pokedex which have the given string appearing in its name.
+// 
+// If there are no matching Pokemon, this function return an
+// empty Pokedex.
 Pokedex search_pokemon(Pokedex pokedex, char *text) {
+    // Use new_pokedex to create a new pokedex.
     Pokedex newdex = new_pokedex();
+    // Use curr to traverse original pokedex.
     pokedex->curr = pokedex->head;
     while (pokedex->curr != NULL) {
+        // If the name of pokemon in original pokedex contains provided
+        // text and it is also 'found',
         if (pokedex->curr->found == TRUE 
             && contain(text, pokemon_name(pokedex->curr->pokemon)) == TRUE) {
+            // use add_pokemon to creat a new pokenode which contains
+            // a clone of original pokemon and place this pokenode at 
+            // the end of the new pokedex.
             add_pokemon(newdex , clone_pokemon(pokedex->curr->pokemon));
         }
         pokedex->curr = pokedex->curr->next;
     }
-    pokedex->select = pokedex->head;
+    // Set select to head of new pokedex.
+    newdex->select = newdex->head;
+    // Set all pokemon in new pokedex to 'found'.
     find_all(newdex);
     return newdex;
 }
@@ -381,8 +528,13 @@ Pokedex search_pokemon(Pokedex pokedex, char *text) {
 // Make them static to limit their scope to this file.
 
 
-// Create a new pokenode containing a pokemon struct,
-// and next fields, return a pointer to the new  node.
+// Create a new pokenode containing a pokemon 
+// and next fields, return a pointer to the new node.
+// Pokemon points to given pokemon.
+// next always points to NULL as this pokenode will be 
+// the last one of the pokenode created in add_pokemon.
+// 'Found' is initially set to be FALSE.
+// 'Evolve' is initially set to NULL.
 static struct pokenode *create_node(Pokemon pokemon, struct pokenode *next) {
     struct pokenode *node = malloc(sizeof (struct pokenode));  
     if (node == NULL) {
@@ -396,8 +548,8 @@ static struct pokenode *create_node(Pokemon pokemon, struct pokenode *next) {
     return node;
 }
 
-// return pointer to last pokenode in list
-// NULL is returned if list is empty
+// Return pointer to last pokenode in list.
+// NULL is returned if list is empty.
 static struct pokenode *last(Pokedex pokedex) {
     pokedex->curr = pokedex->head;
     if (pokedex->curr == NULL) {
@@ -409,10 +561,10 @@ static struct pokenode *last(Pokedex pokedex) {
     return pokedex->curr;
 }
 
-// return FALSE if the pokemon has been added and TRUE otherwise
+// Return FALSE if the pokemon has been added and TRUE otherwise.
 static int check(Pokedex pokedex, Pokemon pokemon) {
     pokedex->curr = pokedex->head;
-    while(pokedex->curr != NULL) {
+    while (pokedex->curr != NULL) {
         if (pokemon_id(pokedex->curr->pokemon) == pokemon_id(pokemon)) {
             return FALSE;
         }
@@ -421,8 +573,7 @@ static int check(Pokedex pokedex, Pokemon pokemon) {
     return TRUE;
 }
 
-
-// replace name with asterisks
+// Print a pokemon's name with asterisks in same length.
 static void name_asterisk(char *name) {
     int i = 0;
     while (name[i] != '\0') {
@@ -432,14 +583,15 @@ static void name_asterisk(char *name) {
     printf("\n");
 }
 
-
-// free name of pokemon, then pokemon, then a pokenode
+// Destroy a pokenode using destroy_pokemon.
+// Free the pokenode after destroy corresponding pokemon.
 static void destroy_node(struct pokenode *node) {
     destroy_pokemon(node->pokemon);
     free(node);
 }
 
-// print a evolution node
+// Print a pokemon's information in evolution process.
+// Hide name and type if it is not 'found'.
 static void print_evolve(struct pokenode *node) {
     pokemon_type first = pokemon_first_type(node->pokemon);
     pokemon_type second = pokemon_second_type(node->pokemon);
@@ -457,7 +609,10 @@ static void print_evolve(struct pokenode *node) {
     }
 }
 
-// change every pokemon in new pokedex created in stage4 to 'found'
+// Change every pokemon in new pokedex created in stage4 to 'found'.
+// 'Found' in new pokenode created by creat_node is defaultly set to be FALSE
+// However, all pokemons picked from original pokedex in stage 4 is 'found'.
+// If pokedex is empty, this function does nothing.
 static void find_all(Pokedex pokedex) {
     if (pokedex != NULL) {
         pokedex->curr = pokedex->head;
@@ -468,9 +623,11 @@ static void find_all(Pokedex pokedex) {
     }   
 }
 
-
-// check if pokemon's name contains provided text
+// Check if pokemon's name contains provid.
+// A TRUE will be returned, FALSE otherwise.
+// Lower case text and name use malloc so they should be free before return.
 static int contain(char *text, char *name) {
+    // Count the length of name and text then convert them to all-lowercase.
     int text_len = 0;
     int name_len = 0;
     while (text[text_len] != '\0') {
@@ -481,8 +638,11 @@ static int contain(char *text, char *name) {
     }
     char *lower_text = lowercase(text, text_len);
     char *lower_name = lowercase(name, name_len);
+    // Use lowercase name and text to check if name contains the provided text.
     int i = 0;
     int j = 0;
+    // A pointer 'select' is used as a ‘Vernier scale‘ to limit the compared part
+    // of name. It moves forward if a comparation fails.
     char *select = lower_name;
     int num_match = 0;
     while (i + text_len <= name_len) {
@@ -495,6 +655,8 @@ static int contain(char *text, char *name) {
             }
             j++;
         }
+        // If num_match equals the length of text, it means a certain part of name 
+        // is tatally the same with the text.
         if (num_match == text_len) {
             free(lower_text);
             free(lower_name);
@@ -507,7 +669,7 @@ static int contain(char *text, char *name) {
     return FALSE;
 }
 
-// conver a string to lower case
+// Convert a string to corresponding lower case string.
 static char *lowercase(char *string, int length) {
     char *lower = malloc((length + 1) * sizeof(char));
     int i = 0;

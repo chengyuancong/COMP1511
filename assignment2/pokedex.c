@@ -41,8 +41,8 @@ struct pokedex {
     struct pokenode *head;    // Always points to the head of pokedex.
     struct pokenode *select;  // Points to selected pokenode.
     struct pokenode *curr;    // Points to current pokenode when traversing.
-    struct pokenode *temp;    // To temporarily save an address of curr or 
-};                            // select or head when they need to move.
+    struct pokenode *temp;    // To temporarily save an address for other fields.
+};                            
 
 
 // You don't have to use the provided struct pokenode, you are free to
@@ -239,7 +239,7 @@ void remove_pokemon(Pokedex pokedex) {
         pokedex->select = NULL;
         pokedex->curr = NULL;
         pokedex->head = NULL;
-    // If length is larger than two, check if select is head or last.
+        // If length is larger than two, check if select is head or last.
     } else if (length >= 2) {
         // Head is selected.
         if (pokedex->select == pokedex->head) {
@@ -251,7 +251,7 @@ void remove_pokemon(Pokedex pokedex) {
             destroy_node(pokedex->temp);
             // Move head to new head.
             pokedex->head = pokedex->select;
-        // Last pokenode is selected.
+            // Last pokenode is selected.
         } else if (pokedex->select->next == NULL) {
             // Save select pokenode.
             pokedex->temp = pokedex->select;
@@ -261,8 +261,8 @@ void remove_pokemon(Pokedex pokedex) {
             destroy_node(pokedex->temp);
             // Set next field of last to NULL.              
             pokedex->select->next = NULL;
-        // If length is larger than two and select is neither head nor last,
-        // select must between head and last.
+            // If length is larger than two and select is neither head nor last,
+            // select must between head and last.
         } else {
             // Save select pokenode.
             pokedex->temp = pokedex->select;

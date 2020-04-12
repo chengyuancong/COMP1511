@@ -451,10 +451,14 @@ Pokedex get_found_pokemon(Pokedex pokedex) {
     // 'found' and add them one by one to anther new pokedex 'found_ordered'.
     // Firstly, use curr of 'found' to traverse 'found' to get
     // a minimum and a maximun of pokemon_id in 'found'.
+    int max = 0;
+    int min = 0;
     found->curr = found->head;
-    int max = pokemon_id(found->curr->pokemon);
-    int min = pokemon_id(found->curr->pokemon);
-    found->curr = found->curr->next;
+    if (found->curr != NULL) {
+        max = pokemon_id(found->curr->pokemon);
+        min = pokemon_id(found->curr->pokemon);
+        found->curr = found->curr->next;
+    }
     while (found->curr != NULL) {
         if (min > pokemon_id(found->curr->pokemon)) {
             min = pokemon_id(found->curr->pokemon);

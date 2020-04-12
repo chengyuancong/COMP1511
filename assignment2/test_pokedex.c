@@ -823,19 +823,6 @@ static void test_get_pokemon_of_type(void) {
     printf("    ... Setting Ivysaur to be found\n");
     find_current_pokemon(pokedex);
     
-    printf("    ... Getting all normal type Pokemons\n");
-    type_pokedex = get_pokemon_of_type(pokedex, NORMAL_TYPE);
-
-    printf("       --> Checking the correct Pokemon were copied and returned\n");
-    /*assert(count_total_pokemon(type_pokedex) == 2);*/
-    assert(count_found_pokemon(type_pokedex) == 2);
-    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), venusaur));
-    next_pokemon(type_pokedex);
-    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), ivysaur));
-    
-    printf("    ... Returning to the original pokedex\n");
-    destroy_pokedex(type_pokedex);
-    
     printf("    ... Moving to the previous pokemon\n");
     prev_pokemon(pokedex);
 

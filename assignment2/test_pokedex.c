@@ -465,12 +465,6 @@ static void test_change_current_pokemon(void) {
     
     printf("       --> Checking that the current Pokemon is Ivysaur\n");
     assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
-
-    printf("    ... Moving to the pokemon with ID 4\n");
-    change_current_pokemon(pokedex, 4);
-    
-    printf("       --> Checking change_current_pokemon does nothing if there is no pokemons with that ID\n");
-    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
     
     printf("    ... Destroying the Pokedex\n");
     destroy_pokedex(pokedex);

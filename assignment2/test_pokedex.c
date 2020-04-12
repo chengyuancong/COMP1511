@@ -65,39 +65,6 @@
 #define CHARIZARD_FIRST_TYPE FLYING_TYPE
 #define CHARIZARD_SECOND_TYPE FIRE_TYPE
 
-// Sample data on Pikachu, the Pokemon with pokemon_id 25.
-#define PIKACHU_ID 25
-#define PIKACHU_NAME "Pikachu"
-#define PIKACHU_HEIGHT 0.4
-#define PIKACHU_WEIGHT 6.0
-#define PIKACHU_FIRST_TYPE ELECTRIC_TYPE
-#define PIKACHU_SECOND_TYPE NONE_TYPE
-
-// Sample data on Nidoran-f, the Pokemon with pokemon_id 29.
-#define NIDORANF_ID 29
-#define NIDORANF_NAME "Nidoran-f"
-#define NIDORANF_HEIGHT 0.4
-#define NIDORANF_WEIGHT 7.0
-#define NIDORANF_FIRST_TYPE POISON_TYPE
-#define NIDORANF_SECOND_TYPE NONE_TYPE
-
-// Sample data on Koffing, the Pokemon with pokemon_id 109
-#define KOFFING_ID 109
-#define KOFFING_NAME "Koffing"
-#define KOFFING_HEIGHT 0.6
-#define KOFFING_WEIGHT 1.0
-#define KOFFING_FIRST_TYPE POISON_TYPE
-#define KOFFING_SECOND_TYPE NONE_TYPE
-
-// Sample data on Weezing, the Pokemon with pokemon_id 110
-#define WEEZING_ID 110
-#define WEEZING_NAME "Weezing"
-#define WEEZING_HEIGHT 1.2
-#define WEEZING_WEIGHT 9.5
-#define WEEZING_FIRST_TYPE POISON_TYPE
-#define WEEZING_SECOND_TYPE NONE_TYPE
-
-
 
 
 // Tests for Pokedex functions from pokedex.c.
@@ -125,10 +92,6 @@ static Pokemon create_venusaur(void);
 static Pokemon create_charmander(void);
 static Pokemon create_charmeleon(void);
 static Pokemon create_charizard(void);
-static Pokemon create_pikachu(void);
-static Pokemon create_nidoranf(void);
-static Pokemon create_koffing(void);
-static Pokemon create_weezing(void);
 static int is_same_pokemon(Pokemon first, Pokemon second);
 static int is_copied_pokemon(Pokemon first, Pokemon second);
 
@@ -225,7 +188,7 @@ static void test_add_pokemon(void) {
     assert(count_total_pokemon(pokedex) == 2);
 
     printf("    ... Creating Venusaur\n");
-    Pokemon Venusaur = create_Venusaur();
+    Pokemon Venusaur = create_venusaur();
 
     printf("    ... Adding Venusaur to the Pokedex\n");
     add_pokemon(pokedex, Venusaur);
@@ -795,6 +758,139 @@ static void test_get_next_evolution(void) {
     printf(">> Passed get_next_evolution tests!\n");
 }
 
+// `test_get_pokemon_of_type` checks whether the get_pokemon_of_type
+// function works correctly.
+//
+// It checks the get_pokemon_of_type function when it is an empty Pokedex.
+// It checks the get_pokemon_of_type function when no pokemon's type 
+// is the same with provided type.
+// It checks that the selected Pokemon in the returned Pokedex 
+// has been set correctly.
+// It checks that the original Pokedex is not modified.
+// It checks if either the first type or the second type of the pokemon
+// are same with the provided type, the pokemons is added in new pokedex.
+// It checks that pokemons are only copied and returned if type matches and it is found.
+// It Checks that the number of all pokemons and number of found pokemons are 
+// correctly returned in the new pokedex.
+static void test_get_pokemon_of_type(void) {
+    printf("\n>> Testing get_pokemon_of_type\n");
+
+    printf("    ... Creating a new Pokedex\n");
+    Pokedex pokedex = new_pokedex();
+    
+    printf("    ... Getting all grass type pokemon in an empty pokedex\n");
+    Pokedex type_pokedex = get_pokemon_of_type(pokedex,GRASS_TYPE);
+    
+    printf("       --> Checking if the type pokedex is empty\n");
+    assert(count_total_pokemon(type_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(type_pokedex);
+    
+    printf("    ... Creating Venusaur, Bulbasaur and Ivysaur\n");
+    Pokemon venusaur = create_venusaur();
+    Pokemon bulbasaur = create_bulbasaur();
+    Pokemon ivysaur = create_ivysaur();
+    
+    printf("    ... Adding Venusaur, Bulbasaur and Ivysaur to the Pokedex\n");
+    add_pokemon(pokedex, venusaur);
+    add_pokemon(pokedex, bulbasaur);
+    add_pokemon(pokedex, ivysaur);
+    
+    printf("       --> Checking that none of the pokemons are found\n");
+    assert(count_found_pokemon(pokedex) == 0);
+    
+    printf("       --> Checking that the current Pokemon is Venusaur\n");
+    assert(get_current_pokemon(pokedex) == venusaur);
+    
+    printf("    ... Setting Venusaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all grass type Pokemons\n");
+    type_pokedex = get_pokemon_of_type(pokedex,GRASS_TYPE);
+    
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(type_pokedex) == 1);
+    assert(count_found_pokemon(type_pokedex) == 1);
+    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), venusaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(type_pokedex);
+    
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
+
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
+
+    printf("       --> Checking that the current Pokemon is Ivysaur\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    
+    printf("    ... Setting Ivysaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all normal type Pokemons\n");
+    type_pokedex = get_pokemon_of_type(pokedex,NORMAL_TYPE);
+
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(type_pokedex) == 2);
+    assert(count_found_pokemon(type_pokedex) == 2);
+    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), venusaur));
+    next_pokemon(type_pokedex);
+    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), ivysaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(type_pokedex);
+    
+    printf("    ... Moving to the previous pokemon\n");
+    prev_pokemon(pokedex);
+
+    printf("    ... Setting Bulbasaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all poison type Pokemons\n");
+    type_pokedex = get_pokemon_of_type(pokedex,POISON_TYPE);
+    
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(type_pokedex) == 2);
+    assert(count_found_pokemon(type_pokedex) == 2);
+    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), bulbasaur));
+    next_pokemon(type_pokedex);
+    assert(is_copied_pokemon(get_current_pokemon(type_pokedex), ivysaur));
+    
+    printf("       --> Checking that in the new Pokedex pokemons do not evolve\n");
+    assert(get_next_evolution(type_pokedex) == DOES_NOT_EVOLVE);
+    prev_pokemon(type_pokedex);
+    assert(get_next_evolution(type_pokedex) == DOES_NOT_EVOLVE);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(type_pokedex);
+    
+    printf("    ... Getting all fire type Pokemons\n");
+    type_pokedex = get_pokemon_of_type(pokedex,FIRE_TYPE);
+    
+    printf("       --> Checking that the function returned an empty pokedex\n");
+    assert(count_total_pokemon(type_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(type_pokedex);
+    
+    printf("       --> Checking if the original pokedex is not modified\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), bulbasaur));
+    prev_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), venusaur));
+    next_pokemon(pokedex);
+    next_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    assert(count_total_pokemon(pokedex) == 3);
+    assert(count_found_pokemon(pokedex) == 3);
+    
+    printf("    ... Destroying both Pokedexes\n");
+    destroy_pokedex(pokedex);
+
+    printf(">> Passed get_pokemon_of_type tests!\n");
+}
+
 // `test_get_found_pokemon` checks whether the get_found_pokemon
 // function works correctly.
 //
@@ -821,34 +917,260 @@ static void test_get_found_pokemon(void) {
 
     printf("    ... Creating a new Pokedex\n");
     Pokedex pokedex = new_pokedex();
-
-    printf("    ... Creating Bulbasaur and Ivysaur\n");
+    
+    printf("    ... Getting all found Pokemon with a empty pokedex\n");
+    Pokedex found_pokedex = get_found_pokemon(pokedex);
+    
+    printf("       --> Checking if the found pokedex is empty\n");
+    assert(count_total_pokemon(found_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(found_pokedex);
+    
+    printf("    ... Creating Venusaur, Bulbasaur and Ivysaur\n");
+    Pokemon venusaur = create_venusaur();
     Pokemon bulbasaur = create_bulbasaur();
     Pokemon ivysaur = create_ivysaur();
 
-    printf("    ... Adding Bulbasaur and Ivysaur to the Pokedex\n");
+    printf("    ... Adding Venusaur, Bulbasaur and Ivysaur to the Pokedex\n");
+    add_pokemon(pokedex, venusaur);
     add_pokemon(pokedex, bulbasaur);
     add_pokemon(pokedex, ivysaur);
-
-    printf("       --> Checking that the current Pokemon is Bulbasaur\n");
-    assert(get_current_pokemon(pokedex) == bulbasaur);
     
-    printf("    ... Setting Bulbasaur to be found\n");
+    printf("       --> Checking that none of the pokemons are found\n");
+    assert(count_found_pokemon(pokedex) == 0);
+    
+    printf("    ... Getting all found Pokemon with a pokedex that no pokemons are found\n");
+    found_pokedex = get_found_pokemon(pokedex);
+    
+    printf("       --> Checking if the found pokedex is empty\n");
+    assert(count_total_pokemon(found_pokedex) == 0);
+    assert(count_found_pokemon(found_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(found_pokedex);
+    
+    printf("       --> Checking that the current Pokemon is Venusaur\n");
+    assert(get_current_pokemon(pokedex) == venusaur);
+    
+    printf("    ... Setting Venusaur to be found\n");
     find_current_pokemon(pokedex);
-
+    
     printf("    ... Getting all found Pokemon\n");
-    Pokedex found_pokedex = get_found_pokemon(pokedex);
-
+    found_pokedex = get_found_pokemon(pokedex);
+    
     printf("       --> Checking the correct Pokemon were copied and returned\n");
     assert(count_total_pokemon(found_pokedex) == 1);
     assert(count_found_pokemon(found_pokedex) == 1);
-    assert(is_copied_pokemon(get_current_pokemon(found_pokedex), bulbasaur));
+    assert(is_copied_pokemon(get_current_pokemon(found_pokedex), venusaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(found_pokedex);
+    
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
 
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
+
+    printf("       --> Checking that the current Pokemon is Ivysaur\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    
+    printf("    ... Setting Ivysaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all found Pokemon\n");
+    found_pokedex = get_found_pokemon(pokedex);
+
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(found_pokedex) == 2);
+    assert(count_found_pokemon(found_pokedex) == 2);
+    assert(is_copied_pokemon(get_current_pokemon(found_pokedex), ivysaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(found_pokedex);
+    
+    printf("    ... Moving to the previous pokemon\n");
+    prev_pokemon(pokedex);
+
+    printf("    ... Setting Bulbasaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all found Pokemon\n");
+    found_pokedex = get_found_pokemon(pokedex);
+    
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(found_pokedex) == 3);
+    assert(count_found_pokemon(found_pokedex) == 3);
+    assert(is_copied_pokemon(get_current_pokemon(found_pokedex), bulbasaur));
+    
+    printf("       --> Checking in the new Pokedex are in ascending order of pokemon_id\n");
+    assert(pokemon_id(get_current_pokemon(found_pokedex)) == 1);
+    next_pokemon(found_pokedex);
+    assert(pokemon_id(get_current_pokemon(found_pokedex)) == 2);
+    next_pokemon(found_pokedex);
+    assert(pokemon_id(get_current_pokemon(found_pokedex)) == 3);
+    
+    printf("       --> Checking in the new Pokedex that pokemons does not evolve\n");
+    assert(get_next_evolution(found_pokedex) == DOES_NOT_EVOLVE);
+    prev_pokemon(found_pokedex);
+    assert(get_next_evolution(found_pokedex) == DOES_NOT_EVOLVE);
+    prev_pokemon(found_pokedex);
+    assert(get_next_evolution(found_pokedex) == DOES_NOT_EVOLVE);
+    
+    printf("    ... Returning to the previous pokedex\n");
+    destroy_pokedex(found_pokedex);
+    
+    printf("       --> Checking if the original pokedex is not modified\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), bulbasaur));
+    prev_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), venusaur));
+    next_pokemon(pokedex);
+    next_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    assert(count_total_pokemon(pokedex) == 3);
+    assert(count_found_pokemon(pokedex) == 3);
+    
     printf("    ... Destroying both Pokedexes\n");
     destroy_pokedex(pokedex);
-    destroy_pokedex(found_pokedex);
 
     printf(">> Passed get_found_pokemon tests!\n");
+}
+
+// `test_search_pokemon` checks whether the test_search_pokemon
+// function works correctly.
+//
+// It checks the search_pokemon function when the Pokedex is empty.
+// It checks the search_pokemon function when the Pokedex has none of
+// the Pokemon's name contains provided text.
+// It checks that the selected Pokemon in the returned Pokedex has been set correctly.
+// It checks that the original Pokedex is not modified.
+// It checks that either the lower or upper cases are matched in the name of the pokemon
+// the pokemons is copied into new pokedex.
+// It checks that pokemons are only copied and returned if name matches and it is found.
+// It checks that the number of total pokemons and number of found pokemons are 
+// correctly returned in the new pokedex.
+static void test_search_pokemon(void) {
+    printf("\n>> Testing search_pokemon\n");
+
+    printf("    ... Creating a new Pokedex\n");
+    Pokedex pokedex = new_pokedex();
+    
+    printf("    ... Getting all Pokemon contains 'saur' in a empty pokedex\n");
+    Pokedex search_pokedex = search_pokemon(pokedex, "saur");
+    
+    printf("       --> Checking if the type pokedex is empty\n");
+    assert(count_total_pokemon(search_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(search_pokedex);
+    
+    printf("    ... Creating Venusaur, Bulbasaur and Ivysaur\n");
+    Pokemon venusaur = create_venusaur();
+    Pokemon bulbasaur = create_bulbasaur();
+    Pokemon ivysaur = create_ivysaur();
+    
+    printf("    ... Adding Venusaur, Bulbasaur and Ivysaur to the Pokedex\n");
+    add_pokemon(pokedex, venusaur);
+    add_pokemon(pokedex, bulbasaur);
+    add_pokemon(pokedex, ivysaur);
+    
+    printf("       --> Checking that none of the pokemons are found\n");
+    assert(count_found_pokemon(pokedex) == 0);
+    
+    printf("       --> Checking that the current Pokemon is Venusaur\n");
+    assert(get_current_pokemon(pokedex) == venusaur);
+    
+    printf("    ... Setting Venusaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all Pokemons contains 'saur'\n");
+    search_pokedex = search_pokemon(pokedex, "saur");
+    
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(search_pokedex) == 1);
+    assert(count_found_pokemon(search_pokedex) == 1);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), venusaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(search_pokedex);
+    
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
+
+    printf("    ... Moving to the next pokemon\n");
+    next_pokemon(pokedex);
+
+    printf("       --> Checking that the current Pokemon is Ivysaur\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    
+    printf("    ... Setting Ivysaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all Pokemons contains 'au'\n");
+    search_pokedex = search_pokemon(pokedex, "au");
+
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(search_pokedex) == 2);
+    assert(count_found_pokemon(search_pokedex) == 2);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), venusaur));
+    next_pokemon(search_pokedex);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), ivysaur));
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(search_pokedex);
+    
+    printf("    ... Moving to the previous pokemon\n");
+    prev_pokemon(pokedex);
+
+    printf("    ... Setting Bulbasaur to be found\n");
+    find_current_pokemon(pokedex);
+    
+    printf("    ... Getting all Pokemons contains 'AU'\n");
+    search_pokedex = search_pokemon(pokedex, "AU");
+    
+    printf("       --> Checking the correct Pokemon were copied and returned\n");
+    assert(count_total_pokemon(search_pokedex) == 3);
+    assert(count_found_pokemon(search_pokedex) == 3);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), venusaur));
+    next_pokemon(search_pokedex);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), bulbasaur));
+    next_pokemon(search_pokedex);
+    assert(is_copied_pokemon(get_current_pokemon(search_pokedex), ivysaur));
+    
+    printf("       --> Checking that in the new Pokedex pokemons do not evolve\n");
+    assert(get_next_evolution(search_pokedex) == DOES_NOT_EVOLVE);
+    prev_pokemon(search_pokedex);
+    assert(get_next_evolution(search_pokedex) == DOES_NOT_EVOLVE);
+    prev_pokemon(search_pokedex);
+    assert(get_next_evolution(search_pokedex) == DOES_NOT_EVOLVE);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(search_pokedex);
+    
+    printf("    ... Getting all Pokemons contains 'pika'\n");
+    search_pokedex = search_pokemon(pokedex, "pika");
+    
+    printf("       --> Checking that the function returned an empty pokedex\n");
+    assert(count_total_pokemon(search_pokedex) == 0);
+    
+    printf("    ... Returning to the original pokedex\n");
+    destroy_pokedex(search_pokedex);
+    
+    printf("       --> Checking if the original pokedex is not modified\n");
+    assert(is_same_pokemon(get_current_pokemon(pokedex), bulbasaur));
+    prev_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), venusaur));
+    next_pokemon(pokedex);
+    next_pokemon(pokedex);
+    assert(is_same_pokemon(get_current_pokemon(pokedex), ivysaur));
+    assert(count_total_pokemon(pokedex) == 3);
+    assert(count_found_pokemon(pokedex) == 3);
+    
+    printf("    ... Destroying both Pokedexes\n");
+    destroy_pokedex(pokedex);
+
+    printf(">> Passed string_pokedex tests!\n");
 }
 
 
@@ -922,49 +1244,7 @@ static Pokemon create_charizard(void) {
     return pokemon;
 }
 
-// Helper function to create Pikachu for testing purposes.
-static Pokemon create_pikachu(void) {
-    Pokemon pokemon = new_pokemon(
-            PIKACHU_ID, PIKACHU_NAME,
-            PIKACHU_HEIGHT, PIKACHU_WEIGHT, 
-            PIKACHU_FIRST_TYPE,
-            PIKACHU_SECOND_TYPE
-    );
-    return pokemon;
-}
 
-// Helper function to create Nidoran-f for testing purposes.
-static Pokemon create_nidoranf(void) {
-    Pokemon pokemon = new_pokemon(
-            NIDORANF_ID, NIDORANF_NAME,
-            NIDORANF_HEIGHT, NIDORANF_WEIGHT,
-            NIDORANF_FIRST_TYPE,
-            NIDORANF_SECOND_TYPE
-    );
-    return pokemon;
-}
-
-// Helper function to create Koffing for testing purposes.
-static Pokemon create_koffing(void) {
-	Pokemon pokemon = new_pokemon(
-	    KOFFING_ID, KOFFING_NAME,
-	    KOFFING_HEIGHT, KOFFING_WEIGHT,
-	    KOFFING_FIRST_TYPE,
-	    KOFFING_SECOND_TYPE
-    );
-    return pokemon;
-}
-
-// Helper function to create Weezing for testing purposes.
-static Pokemon create_weezing(void) {
-	Pokemon pokemon = new_pokemon(
-	    WEEZING_ID, WEEZING_NAME,
-	    WEEZING_HEIGHT, WEEZING_WEIGHT,
-	    WEEZING_FIRST_TYPE,
-	    WEEZING_SECOND_TYPE
-    );
-    return pokemon;
-}
 
 // Helper function to compare whether two Pokemon are the same.
 // This checks that the two pointers contain the same address, i.e.

@@ -326,7 +326,7 @@ int count_total_pokemon(Pokedex pokedex) {
 // 
 // Use curr and temp to traverse two times to find the from_id and to_id.
 // 
-// If from_id and to_id both exist and not equal, change current pokenode's
+// If from_id and to_id both exist and not equal, change curr pokenode's
 // evolve to temp pokenode. 
 // 
 // Print error and exit otherwise.

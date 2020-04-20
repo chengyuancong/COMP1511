@@ -7,6 +7,6 @@
 #include <stdio.h>
 
 int main(void){
-
+    printf("I got 100%%\n");
     return 0;
 }

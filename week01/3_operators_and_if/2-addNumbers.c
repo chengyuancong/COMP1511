@@ -11,7 +11,8 @@ int main(void) {
 	scanf("%d",&firstNum);
 	printf("Enter the second no:");
 	scanf("%d",&secondNum);
+	
 	sum = firstNum + secondNum;
-        printf("Sum of the numbers is %d \n", sum);
-        return 0;
+	printf("Sum of the numbers is %d \n", sum);
+    return 0;
 }

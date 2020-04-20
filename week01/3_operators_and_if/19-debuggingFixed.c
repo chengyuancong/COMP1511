@@ -23,7 +23,7 @@ int main(void) {
         } else {
             printf("You are a minor\n");
         }
-     }
+    }
      
-     return 0;
+    return 0;
 }

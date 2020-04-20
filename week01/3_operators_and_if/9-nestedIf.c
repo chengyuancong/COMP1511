@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-//Do with nested loops
+//Do with nested if
 //-101 big negative number
 //-100 small negative number
 // 101 big positive number

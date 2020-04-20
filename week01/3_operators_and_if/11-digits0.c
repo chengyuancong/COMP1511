@@ -3,8 +3,6 @@
 
 #include <stdio.h>
 
-#include <stdio.h>
-
 int main(void) {
     int x;
     printf("Enter x: ");
@@ -17,7 +15,7 @@ int main(void) {
         x = -x; 
     }
    
-    if ((x < 10) ) {
+    if (x < 10) {
         printf("1 digit");
     } else if (x < 100) {
         printf("2 digits");

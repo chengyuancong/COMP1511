@@ -186,10 +186,10 @@ static void test_add_pokemon(void) {
     assert(count_total_pokemon(pokedex) == 2);
 
     printf("    ... Creating Venusaur\n");
-    Pokemon Venusaur = create_venusaur();
+    Pokemon venusaur = create_venusaur();
 
     printf("    ... Adding Venusaur to the Pokedex\n");
-    add_pokemon(pokedex, Venusaur);
+    add_pokemon(pokedex, venusaur);
     
     printf("       --> Checking that Venusaur was correctly added\n");
     assert(count_total_pokemon(pokedex) == 3);

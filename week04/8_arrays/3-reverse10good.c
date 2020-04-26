@@ -2,7 +2,7 @@
  
 // Note for simplicity we are assuming scanf succeeds in reading an integer.
 // A robust program would check that scanf returns 1 to indicate an integer read.
-// The constants 4 & 5 below would be better replaced with a #deine
+// The constants 4 & 5 below would be better replaced with a #define
 
 #include <stdio.h>
 

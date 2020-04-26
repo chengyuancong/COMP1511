@@ -31,9 +31,7 @@ int main(void) {
 
 int make_upper_case(int character) {
     if (character >= 'a' && character <= 'z') {
-        int alphabetPosition = character - 'a';
-        return 'A' + alphabetPosition;
-    } else {
-        return character;
+        character = character - ('a' - 'A');
     }
+    return character;
 }

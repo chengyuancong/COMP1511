@@ -8,10 +8,10 @@
 #define  SIZE 10
 
 
-//  0  1 2  3  4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
-//0 d  o g  \0
-//1 c  a t  \0
-//2 e  l e  p  h a n t \0
+//   0  1  2  3  4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+//0  d  o  g  \0
+//1  c  a  t  \0
+//2  e  l  e  p  h a n t \0
 
 void printAllStrings(char data[][MAX_LENGTH], int size);
 

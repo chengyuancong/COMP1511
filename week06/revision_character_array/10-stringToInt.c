@@ -21,7 +21,7 @@ int main(void) {
     while (isdigit(c)) {
         digitValue = 10 * digitValue + (c - '0');
         
-        printf("read %c and value: %d\n",c-'0',digitValue);
+        printf("read %d and value: %d\n",c-'0',digitValue);
         c = getchar();
     }
     printf("v1: You entered %d\n", digitValue);

@@ -44,10 +44,7 @@ int main(void){
     strcpy(names1[2] ,"tiger");
     printAllStrings(names1,3);
     
-    int  num_animals = 0;
-	while (num_animals < NUM_WORDS && (fgets(names1[num_animals], LEN, stdin) != NULL)) {
-		num_animals++;
-	}
+    int num_animals = readData(names1);
 
     printf("enter an animal to search");
     char search[10];
@@ -65,16 +62,14 @@ int main(void){
 
 
 int readData(char data[NUM_WORDS][LEN]) {
-
-
 	int i = 0;
 	while ( i < NUM_WORDS && (fgets(data[i], LEN, stdin) != NULL)) {
 		i++;
 	}
 	return i;
-
-
 }
+
+
 void printAllStrings(char data[][MAX_LENGTH], int size){
     int i = 0;
     while (i < size){

@@ -27,14 +27,14 @@ int main(void) {
     printf("%d %d %d\n",strlen(str1),strlen(str2), strlen(str3));
     
     //Comparing two strings using == will not work as we would expect. We should use strcmp instead
-    if(str3 == str1){
+    /* if(str3 == str1) {
         printf("They are equal\n");
     } else {
         printf("They are not equal\n");
-    }
+    } */
 
     if (strcmp(str3,str1) == 0){ 
-       printf("They are equal\n");
+        printf("They are equal\n");
     } else {
         printf("They are not equal\n");
     }

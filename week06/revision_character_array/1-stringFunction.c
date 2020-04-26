@@ -63,8 +63,10 @@ long myStrlen(char s[]){
     return i;
 }
 
-/* strcat appends str2 to str1, over writing the terminating null char ('\0') at the end of str1, and then adds a terminating null byte char. strncat will use at most n bytes from str2.
-*/
+// strcat appends str2 to str1, over writing the terminating null char ('\0') 
+// at the end of str1, and then adds a terminating null byte char. 
+// strncat will use at most n bytes from str2.
+
 // str1 = good str2 = bye
 // strcat(str1, str2)  ->  str1 = "goodbye"
 

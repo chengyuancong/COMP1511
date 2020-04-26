@@ -30,14 +30,14 @@ int main(void) {
     
     //Comparing two strings using == will not work as we would expect. 
     //We should use strcmp instead
-    if(str3 == str1){
+    /* if(str3 == str1) {
         printf("They are equal\n");
     } else {
         printf("They are not equal\n");
-    }
+    } */
 
     if (strcmp(str3,str1) == 0){ 
-       printf("They are equal\n");
+        printf("They are equal\n");
     } else {
         printf("They are not equal\n");
     }
@@ -56,11 +56,11 @@ int main(void) {
 // 0 1 2 3   s
 // d o g \0 
 int myStrlen(char s[]){
-   int i = 0;
-   while(s[i] != '\0'){
-       i = i + 1;
-   } 
-   return i;
+    int i = 0;
+    while(s[i] != '\0'){
+        i = i + 1;
+    }
+    return i;
 }
 
 //       i            
@@ -71,11 +71,10 @@ int myStrlen(char s[]){
 // d o g \0
 //Our own version of the strcpy function
 void myStrCopy(char dest[], char src[]){
-   int i = 0;
-
-   while(src[i] != '\0'){
-       dest[i] = src[i];
-       i = i + 1;
-   }
-   dest[i] = '\0';
+    int i = 0;
+    while(src[i] != '\0'){
+        dest[i] = src[i];
+        i = i + 1;
+    }
+    dest[i] = '\0';
 }

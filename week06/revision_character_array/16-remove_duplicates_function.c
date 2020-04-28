@@ -24,16 +24,15 @@ int remove_duplicates(int length, int source[],int destination[]) {
         int j = 0;
         //printf("i:%d, source[i]:%d \n",i,source[i]);
         duplicate = 0;
-        while ((j < destIndex) && (!duplicate)) {
+        while ((j < destIndex) && (duplicate == 0)) {
             // keep checking for duplicates
             //printf("j:%d, dest[j]:%d\n",j,destination[j]);
-
-            if (source[sourceIndex] == destination[j]) {
+            if (destination[j] == source[sourceIndex]) {
                 duplicate = 1;
             }
             j = j + 1;
         }
-        if (!duplicate) {
+        if (duplicate == 0) {
             destination[destIndex] = source[sourceIndex];
             destIndex = destIndex + 1; 
         }

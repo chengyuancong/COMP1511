@@ -22,15 +22,15 @@ int main(void) {
     printf("x is %d\n",x);   //11
     printf("*p is %d\n",*p); //11
        
-    //printf("*p2 is %d\n",*p2);  // NULL POINTER PROBLEM Don't dereference 
-    
-                                  // a NULL pointer.   
+    //printf("*p2 is %d\n",*p2);  // NULL POINTER PROBLEM 
+                                  // Don't dereference a NULL pointer.   
     
     
     char name[] = "Samuel";
     name[0] = "C";  // this is valid
     // name = "Jack";  // not valid - compiler error
-    
+                       // need to use strcpy
+                       
     char *cp = "Samuel";
     // cp[0] = 'C';  // this will result in a run-time error. Because string literals in read-only memory are immutable
     cp = "Jack"; // this is valid

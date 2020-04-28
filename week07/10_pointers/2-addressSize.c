@@ -15,10 +15,10 @@ int main(void) {
     char c = 'a';
                                 //On 14/02/2019 at 11:50 this was 4
                                 //Now it is 8
-    printf("%lu %lu\n",sizeof(x),sizeof(&x));
+    printf("%lu %lu\n",sizeof x, sizeof &x);
                                 //On 14/02/2019 at 11:50 this was 4
                                 //Now it is 8
-    printf("%lu %lu\n",sizeof(c),sizeof(&c));
+    printf("%lu %lu\n",sizeof c, sizeof &c);
     
     //Size of long has also changed from 4 to 8!
     printf("%lu %lu\n",sizeof(long), sizeof(long long));

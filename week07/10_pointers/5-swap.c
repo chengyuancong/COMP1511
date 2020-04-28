@@ -4,11 +4,7 @@
 
 #include <stdio.h>
 
-void swap(int *a, int *b) {
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
+void swap(int *a, int *b);
 
 int main(int argc, char *argv[]) {
     int x = 42;
@@ -21,4 +17,10 @@ int main(int argc, char *argv[]) {
     printf("x=%d y=%d\n", x, y);
 
     return 0;
+}
+
+void swap(int *a, int *b) {
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
 }

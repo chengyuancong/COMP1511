@@ -4,10 +4,8 @@
 
 #include <stdio.h>
 
-void powers(double x, double *square, double *cube) {
-    *square = x * x;
-    *cube = x * x * x;
-}
+void powers(double x, double *square, double *cube);
+
 
 int main(void) {
     double s, c;
@@ -17,4 +15,9 @@ int main(void) {
     printf("42^2 = %lf\n", s);
     printf("42^3 = %lf\n", c);
     return 0;
+}
+
+void powers(double x, double *square, double *cube) {
+    *square = x * x;
+    *cube = x * x * x;
 }

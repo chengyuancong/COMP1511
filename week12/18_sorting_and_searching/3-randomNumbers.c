@@ -22,7 +22,6 @@ int main(void) {
     return EXIT_SUCCESS;    
 }
 
-}
 
 void randomInts(int array[], int length) {
      for (int i = 0; i < length; i = i + 1) {

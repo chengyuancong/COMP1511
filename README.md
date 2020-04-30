@@ -1,4 +1,4 @@
-# DPST1091
+# COMP1511
 
 Lecture examples, labs and tutorial exercise and assignments of COMP1511, Programming Fundamentals.  
 

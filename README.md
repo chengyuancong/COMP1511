@@ -1,6 +1,6 @@
 # DPST1091
 
-Lecture examples, labs and tutorial exercise and assignments of DPST1091, Programming Fundamentals.  
+Lecture examples, labs and tutorial exercise and assignments of COMP1511, Programming Fundamentals.  
 
 UNSW Trimester 1, 2020.  
 &nbsp;

@@ -1,12 +1,12 @@
 # ignore all
 *
 
-# except files with specific extentions
+# except files with specific names or extentions
 !*.c
 !*.h
 !*.txt
 !*.md
-!*.gitignore
+!.gitignore
 
 # except all dirs
 !*/
